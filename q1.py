@@ -73,10 +73,33 @@ class Solution(object):
 				hash_table.put(target - nums[index1], index1)
 
 		return None
+
+	def twoSum_fast(self, nums, target):
+
+		result = []
+
+		hash_table = HashTable()
+
+		for index1 in range(0, len(nums)):
+			
+			if hash_table.containKey(target-nums[index1]):
+				
+				index2 = hash_table.get(target-nums[index1])
+				
+				if index1 < index2:
+					return [index1+1, index2+1]
+				else:
+					return [index2+1, index1+1]
+					
+			else:
+				
+				hash_table.put(nums[index1], index1)
+
+		return None
 	
 if __name__ == '__main__':
 	solution = Solution()
-	result = solution.twoSum([-1,-2,-3,-4,-5], -8)
+	result = solution.twoSum_fast([-1,-2,-3,-4,-5], -8)
 	if result:
 		index1, index2 = result
 		print "index1=%d, index2=%d" %(index1, index2)
