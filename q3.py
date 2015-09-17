@@ -31,9 +31,16 @@ class HashTable(object):
 		
 	def remove(self, key):
 		self.hash_table.pop(key, None)
+		return 
 
+	def __repr__(self):
+		return "%s" %(self.hash_table)
+
+	def __str__(self):
+		return "%s" %(self.hash_table)
 			
 class Solution(object):
+	
     def lengthOfLongestSubstring(self, s):
 		"""
 		:type s: str
@@ -44,36 +51,36 @@ class Solution(object):
 			return 0
 
 		start = 0
-		ans = 0
-		i = 0
-		
+		length = 0
+
 		hashmap = HashTable()
 
 		for i in range(0, len(s)):
 			
 			if hashmap.containKey(s[i]):
 				
-				if ans < i - start:
-					
-					ans = i - start
-				
 				for j in range(start, hashmap.get(s[i])):
 					
-					hashmap.remove(j)
+					hashmap.remove(s[j])
 				
 				if hashmap.get(s[i]) + 1 > start:
 					
 					start = hashmap.get(s[i]) + 1
-				
-			hashmap.put(s[i], i)
-			
-		if ans < i - start:
-			
-			ans = i - start
 
-		return ans
+			length = max(length, i-start+1)
+
+			# print "start -> %s, %s -> %s, hashmap -> %s" %(start, s[i], i, hashmap)
+			
+			hashmap.put(s[i], i)
+
+		return length
 		
 if __name__ == '__main__':
 	solution = Solution()
-	result = solution.lengthOfLongestSubstring("c")
-	print result
+
+	str_list = ["", "c", "dvdf", "aaaabbb", 
+				"vqblqcb",  "wobgrovw", "abcabcaaaaaaabcde"]
+
+	for s in str_list:
+		result = solution.lengthOfLongestSubstring(s)
+		print "%s -> %d" %(s, result)
