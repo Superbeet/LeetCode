@@ -40,7 +40,7 @@ class HashTable(object):
 		return "%s" %(self.hash_table)
 			
 class Solution(object):
-	
+
     def lengthOfLongestSubstring(self, s):
 		"""
 		:type s: str
@@ -63,10 +63,8 @@ class Solution(object):
 					
 					hashmap.remove(s[j])
 				
-				if hashmap.get(s[i]) + 1 > start:
-					
-					start = hashmap.get(s[i]) + 1
-
+				start = hashmap.get(s[i])+1
+				
 			length = max(length, i-start+1)
 
 			# print "start -> %s, %s -> %s, hashmap -> %s" %(start, s[i], i, hashmap)
