@@ -63,8 +63,8 @@ class Solution(object):
 					
 					hashmap.remove(s[j])
 				
-				start = hashmap.get(s[i])+1
-				
+				start = hashmap.get(s[i]) + 1
+
 			length = max(length, i-start+1)
 
 			# print "start -> %s, %s -> %s, hashmap -> %s" %(start, s[i], i, hashmap)
@@ -72,7 +72,35 @@ class Solution(object):
 			hashmap.put(s[i], i)
 
 		return length
-		
+
+    def lengthOfLongestSubstring2(self, s):
+		"""
+		:type s: str
+		:rtype: int
+		"""
+
+		if s is None:
+			return 0
+
+		start = 0
+		length = 0
+
+		hashmap = HashTable()
+
+		for i in range(0, len(s)):
+			
+			if hashmap.containKey(s[i]):
+				
+				start = max(hashmap.get(s[i])+1, start)
+
+			length = max(length, i-start+1)
+
+			# print "start -> %s, %s -> %s, hashmap -> %s" %(start, s[i], i, hashmap)
+			
+			hashmap.put(s[i], i)
+
+		return length
+
 if __name__ == '__main__':
 	solution = Solution()
 
@@ -81,4 +109,6 @@ if __name__ == '__main__':
 
 	for s in str_list:
 		result = solution.lengthOfLongestSubstring(s)
-		print "%s -> %d" %(s, result)
+		print "Sol1 %s -> %d" %(s, result)
+		result = solution.lengthOfLongestSubstring(s)
+		print "Sol2 %s -> %d" %(s, result)
