@@ -1,31 +1,3 @@
-
-
-class Stack(object):
-    def __init__(self, limit):
-        self.queue = []
-        self.limit = limit
-
-    def push(self, item):
-        if len(self.queue) is self.limit:
-            return False
-        else:
-            self.queue.append(item)
-            return True
-
-    def pop(self):
-        if len(self.queue) is 0:
-            return False
-        else:
-            return self.queue.pop()
-
-    def length(self):
-        return len(self.queue)
-
-    def __repr__(self):
-        return "stack()"
-
-    def __str__(self):
-        return "user defined stack object %s" %(self.queue)
 		
 class Solution(object):
 	def longestPalindrome(self, s):
@@ -37,10 +9,10 @@ class Solution(object):
 		start_index = 0
 		length = 0
 		
-		if len(s)==0:
+		if s is None or s is "":
 			return ""
 		
-		if len(s)==1:
+		if len(s)<=1:
 			return s
 		
 		for i in range(0, len(s)-1):
@@ -64,7 +36,7 @@ class Solution(object):
 				length = temp_length
 				start_index = temp_start_index
 		
-		print "main->", [start_index, length]
+		# print "main->", [start_index, length]
 		
 		return s[start_index: start_index+length]
 		
@@ -84,7 +56,7 @@ class Solution(object):
 		
 		start_index = start - dist + 1
 		
-		print "search->", [start_index, width]
+		# print "search->", [start_index, width]
 		
 		return [start_index, width]
 
