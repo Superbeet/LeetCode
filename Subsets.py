@@ -1,29 +1,29 @@
 import copy
 
 #Iterative
-class Solution(object):
-    def subsets(self, nums):
-		"""
-		:type nums: List[int]
-		:rtype: List[List[int]]
-		"""
+# class Solution(object):
+#     def subsets(self, nums):
+# 		"""
+# 		:type nums: List[int]
+# 		:rtype: List[List[int]]
+# 		"""
 
-		nums.sort()
-		array_list = [[]]
+# 		nums.sort()
+# 		array_list = [[]]
 
-		for num in nums:
+# 		for num in nums:
 			
-			for i in range(0, len(array_list)):
+# 			for i in range(0, len(array_list)):
 				
-				item = []
+# 				item = []
 				
-				item = copy.copy(array_list[i])
+# 				item = copy.copy(array_list[i])
 				
-				item.append(num)
+# 				item.append(num)
 				
-				array_list.append(item)
+# 				array_list.append(item)
 
-		return array_list
+# 		return array_list
 		
 
 #Recursive
@@ -43,13 +43,13 @@ class Solution(object):
 		if index == n:
 			rst.append(copy.copy(now))
 			return
-			
-		print "index->", index
+
+		# print "index->", index
+		self.getSubset(nums, index+1, n ,rst, now)
+
 		now.append(nums[index])
 		self.getSubset(nums, index+1, n, rst, now)
-		
 		now.pop(-1)
-		self.getSubset(nums, index+1, n ,rst, now)
 		
 		return
 		
