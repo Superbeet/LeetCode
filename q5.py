@@ -16,7 +16,6 @@ class Solution(object):
 			return s
 		
 		for i in range(0, len(s)-1):
-		
 			if s[i] == s[i+1]:
 				start = i
 				end = i + 1
@@ -25,9 +24,8 @@ class Solution(object):
 				
 				if temp_length>length:
 					length = temp_length
-					start_index = temp_start_index
-					
-			
+					start_index = temp_start_index	
+
 			start = i
 			end = i
 			temp_start_index, temp_length = self.search(s, start, end)
@@ -36,28 +34,16 @@ class Solution(object):
 				length = temp_length
 				start_index = temp_start_index
 		
-		# print "main->", [start_index, length]
-		
 		return s[start_index: start_index+length]
 		
 	def search(self, s, start, end):
-		
 		dist = 1
-		
 		while start-dist >= 0 and end+dist < len(s):
-			
 			if s[start-dist] is not s[end+dist]:
-				
 				break
-			
 			dist += 1
-			
 		width = end - start + 2*dist - 1
-		
 		start_index = start - dist + 1
-		
-		# print "search->", [start_index, width]
-		
 		return [start_index, width]
 
 			
