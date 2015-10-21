@@ -7,28 +7,37 @@ class Solution:
 	# 这四个数，也就是说A[2]最多可能是第5个大的数，由于我们要求的是getKth(A, B, 7)；
 	# 现在就变成了求getKth(A', B, 4)；即A' = {7}；B不变，求这两个数列的第4个小的数，
 	# 因为A[0]，A[1]，A[2]中没有解，所以我们直接删掉它们就可以了。这个可以使用递归来实现。
-
-    def getKth(self, A, B, k):
-        lenA = len(A)
-        lenB = len(B)
-        if lenA > lenB: 
-        	return self.getKth(B, A, k)
-        if lenA == 0: 
-        	return B[k - 1]
-        if k == 1: 
-        	return min(A[0], B[0])
-        pa = min(k/2, lenA)
-        pb = k - pa
-        if A[pa - 1] <= B[pb - 1]:
-            return self.getKth(A[pa:], B, pb)
-        else:
-            return self.getKth(A, B[pb:], pa)
-    
-    def findMedianSortedArrays(self, A, B):
-        lenA = len(A)
-        lenB = len(B)
-        if (lenA + lenB) % 2 == 1: 
-            return self.getKth(A, B, (lenA + lenB)/2 + 1)
-        else:
-            return (self.getKth(A, B, (lenA + lenB)/2) + \
-             		self.getKth(A, B, (lenA + lenB)/2 + 1)) * 0.5
+					
+	def getKth(self, A, B, k):
+		lenA = len(A)
+		lenB = len(B)
+		
+		if lenA>lenB:
+			return self.getKth(B, A, k)
+		
+		if lenA == 0:
+			return B[k-1]
+		
+		if k == 1:
+			return min(A[0], B[0])
+		
+		pa = min(k/2, lenA)
+		pb = k - pa
+		
+		if A[pa-1] <= B[pb-1]:
+			return self.getKth(A[pa:], B, pb)
+		else:
+			return self.getKth(A, B[pb:], pa)
+	
+	def findMedianSortedArrays(self, A, B):
+		lenA = len(A)
+		lenB = len(B)
+		if (lenA + lenB) % 2 == 1:
+			return   self.getKth(A, B, (lenA+lenB)/2+1)
+		else:
+			return ( self.getKth(A, B, (lenA+lenB)/2) + self.getKth(A, B, (lenA+lenB)/2+1) )*0.5
+		
+		
+		
+		
+		
