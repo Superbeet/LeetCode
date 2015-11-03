@@ -9,20 +9,22 @@ class Solution(object):
 
 	def isMatchRec(self, s, p, i, j):
 
-		# End of the string 
+		# THE BASE CASE:End of the string 
 		if j == len(p):
 			return i == len(s)
 		
-		# At least two character left in pattern
+		# The first Case: next node in P is *
 		if j < len(p)-1 and p[j+1] == '*':
 			
+			# P can skip 2 node, and the S can skip 0 or more characters.
+
 			# match 0
 			if self.isMatchRec(s, p, i, j+2):
 				return True
 			
-			# match 0 or more
+			# match 1 or more
 			for x in xrange(i, len(s)):
-				# match 1 0r more
+				# the char is not equal
 				if not self.charMatch(s[x], p[j]):
 					return False
 				
@@ -32,8 +34,12 @@ class Solution(object):
 				x+=1
 				
 			return False
-					
-		return i<len(s) and self.charMatch(s[i], p[j]) and self.isMatchRec(s, p, i+1, j+1)
+				
+		# S should have at least one character left.
+		if i<len(s) and self.charMatch(s[i], p[j]):
+			return self.isMatchRec(s, p, i+1, j+1)
+		else:
+			return False
 
 	def charMatch(self, s_element, p_element):
 		
@@ -45,8 +51,8 @@ class Solution(object):
 sol = Solution()
 from time import clock
 start = clock()
-# result = sol.isMatch("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*c")
-result = sol.isMatch("aaabc", "a*bc")
+result = sol.isMatch("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*c")
+# result = sol.isMatch("aaabc", "a*bc")
 finish = clock()
 print "%s(s)" %(finish-start)
 print result
