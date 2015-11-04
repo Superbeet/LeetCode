@@ -21,19 +21,19 @@ class Solution(object):
 		match = [[False for x in range(len(p)+1)] for x in range(len(s)+1)] 
 		# print match
 		match[0][0] = True
-
+		
 		for i in xrange(0, len(s)+1):
 			for j in xrange(1, len(p)+1):
 
 				if i!=0:
-					cur_char = p[j-1]
 
-					if j>1 and cur_char == '*':
+					if j>1 and p[j-1] == '*':
 						match[i][j] = match[i][j-2] or match[i][j-1] or (match[i-1][j] and self.isSame(s[i-1], p[j-2]))
 
-					elif match[i-1][j-1] and self.isSame(s[i-1], cur_char):
+					elif match[i-1][j-1] and self.isSame(s[i-1], p[j-1]):
 						match[i][j] = True
-
+				
+				# if i == 0
 				elif j>=2 and p[j-1]=='*' and match[0][j-2]:
 					match[0][j] = True
 
@@ -45,9 +45,16 @@ class Solution(object):
     		return True
 			
     	return False
-		
+
 sol = Solution()
-print sol.isMatch("aa","a")
+from time import clock
+start = clock()
+sol = Solution()
+result = sol.isMatch("aa","a")
+finish = clock()
+print "%s(s)" %(finish-start)
+print result
+
 
 
 
