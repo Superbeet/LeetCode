@@ -45,15 +45,31 @@ def deserialize(string):
 	# print "str_list -> ", str_list
 	root = do_deserialize(str_list)
 	return root
-	
+
 def do_deserialize(str_list):
+	# print "str_list -> %s" %(str_list)
 	if str_list[0] == "/":
 		return None
-	node = Node(copy.copy(str_list[0]))
-	# print "root->val: %s" %(root.val)
-	root.left  = do_deserialize(str_list[1:])
-	root.right = do_deserialize(str_list[1:])
+	node = Node(str_list[0])
+	# print "node->val: %s" %(node.val)
+
+	del str_list[0]
+	node.left  = do_deserialize(str_list)
+
+	del str_list[0]
+	node.right = do_deserialize(str_list)
+
 	return node
+
+# def do_deserialize(str_list):
+# 	tmp_list = copy.copy(str_list)
+# 	if tmp_list[0] == "/":
+# 		return None
+# 	node = Node(tmp_list[0])
+# 	print "node->val: %s" %(node.val)
+# 	root.left  = do_deserialize(tmp_list[1:])
+# 	root.right = do_deserialize(tmp_list[1:])
+# 	return node
 
 def inorder(root):
 	if root != None:
@@ -75,7 +91,7 @@ if __name__ == '__main__':
 
 	tmp_string = serialize(root)
 
-	print "tmp_string -> %s" %(tmp_string)
+	# print "tmp_string -> %s" %(tmp_string)
 	
 	# tmp_list = tmp_string.split(" ")
 	# print "tmp_list -> %s" %(tmp_list)
