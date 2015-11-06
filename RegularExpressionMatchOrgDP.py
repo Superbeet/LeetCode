@@ -14,7 +14,7 @@ class Solution():
 					
 					# there should be a char in front of *
 					if j<2:
-						Match[i][j] = False
+						return False
 				
 					for k in range(0, i+1):
 						# if any consective character mismatch p[j-2], it means False
