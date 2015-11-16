@@ -5,45 +5,63 @@ class TreeNode(object):
         self.left = None
         self.right = None
 
+#方法一: use range to do jungement, need integer boundary
+import sys
+
 class Solution(object):
     def isValidBST(self, root):
         """
         :type root: TreeNode
         :rtype: bool
         """
-        return self.check_valid_BST(root, None, None)
+        return self.check_valid_BST(root, -sys.maxint-1, sys.maxint)
 
-    def check_valid_BST(self, node, min_val, max_val):
+    def check_valid_BST(self, node, min, max):
 
         if node == None:
             return True
 
-        if min_val == None:
-            min_val = node.val
-        else:
-            min_val = min(min_val, node.val)
-            
-        if max_val == None:
-            max_val = node.val
-        else:
-            max_val = max(max_val, node.val)
-            
-        # equal is also False
+        if node.val<=min or node.val>=max:
+            return False
 
-        if (node.left==None or node.left.val<min_val) and (node.right==None or node.right.val>max_val):
+        return self.check_valid_BST(node.left, min, node.val) and \
+                self.check_valid_BST(node.right, node.val, max)
+
+
+class Solution1(object):
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        self.prev = -sys.maxint-1
+        return self.check_valid_BST(root)
+
+    def check_valid_BST(self, node):
+
+        if node == None:
             return True
 
-        # if node.right.val>max_val or node.right==None:
-        #     return True
+        if self.check_valid_BST(node.left)==False:
+            return False
 
-        # left_flag = self.check_valid_BST(node.left, min_val, max_val)
+        if node.val<=prev:
+            return False
 
-        # right_flag = self.check_valid_BST(node.right, min_val, max_val)
+        self.prev = node.val
 
-        return self.check_valid_BST(node.left, min_val, max_val) and self.check_valid_BST(node.right, min_val, max_val)
+        if self.check_valid_BST(node.right)==False:
+            return False
 
-root = TreeNode(1)
+        return True
+
+
+
+
+
+root = TreeNode(2)
 root.left = TreeNode(1)
+root.right = TreeNode(3)
 
 sol = Solution()
 print sol.isValidBST(root)
