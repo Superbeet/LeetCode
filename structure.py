@@ -15,5 +15,11 @@ class stack(object):
     def size(self):
         return len(self.stack)
 
-    def empty(self):
+    def isEmpty(self):
         return len(self.stack)==0
+
+    def __str__(self):
+        return "%s" %self.stack
+
+    def __repr__(self):
+        return "%s" %self.stack
