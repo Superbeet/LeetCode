@@ -1,4 +1,3 @@
-#coding=utf-8
 """
 Input:
 haystack = 'aabbaa'; needle='bb'
@@ -15,7 +14,7 @@ return = 'bbaa'
 我们考虑P[6]是否有可能由P[5]的情况所包含的子串得到，即是否P[6]=P[ P[5] ]+1。
 这里想不通的话可以仔细看一下：
 """
-
+# 48 ms
 class Solution(object):
     def strStr(self, haystack, needle):
         """
@@ -23,29 +22,90 @@ class Solution(object):
         :type needle: str
         :rtype: int
         """
-    	pass
+        if not needle:
+            return 0
 
-    def get_partial_match_table(self, needle):
-    	table = [0 for i in range(len(needle))]
-    	length = len(needle)
-    	table[0] = 0
-    	k = 0
+        if not haystack:
+            return -1
+        
+        m = len(haystack)
+        n = len(needle)
 
-    	for i in range(1, length):
+        for i in xrange(0, m-n+1):
+            for j in xrange(0, n):
+                p1 = haystack[i+j]
+                p2 = needle[j]
 
-    		# print "needle_i[%s]->%s, needle_k[%s]->%s" %(i, needle[i], k, needle[k])
-    		# print "table->%s" %(table)
+                if p1!=p2:
+                    break
 
-    		while k>0 and needle[k] != needle[i]:
-    			k = table[k-1]
+                if j == n-1:
+                    return i
 
-    		if needle[k] == needle[i]:
-    			k = k + 1
-    			
-    		print "table[%s] <- %s" %(i, k)
-    		table[i] = k
+        return -1
 
-    	return table
+# KMP Solution 84m
+class Solution(object):
+    def strStr(self, haystack, needle):
+        """
+        :type haystack: str
+        :type needle: str
+        :rtype: int
+        """
+        if not needle:
+            return 0
 
-sol = Solution()
-print sol.get_partial_match_table("ababacb")
+        if not haystack:
+            return -1
+
+        m = len(haystack)
+        n = len(needle)
+        match = self.kmp_process(needle)
+        
+        j = -1
+
+        for i in xrange(0, m):
+            while j>=0 and haystack[i]!=needle[j+1]:
+                j = match[j]
+
+            if haystack[i] == needle[j+1]:
+                j +=1
+
+            if j == n-1:
+                return i-n+1
+                
+        return -1
+
+    def kmp_process(self, s):
+        n = len(s)
+        match = [-1 for x in range(n)]
+
+        j = -1
+
+        for i in xrange(1, n):
+            
+            while j>=0 and s[i]!=s[j+1]:
+                j = match[j]
+
+            if s[i]==s[j+1]:
+                j += 1
+
+            match[i] = j
+
+        return match
+import unittest
+
+class WidgetTestCase(unittest.TestCase):
+
+    def setUp(self):
+        self.sol = Solution2()
+
+    # def tearDown(self):
+    #     self.widget.dispose()
+    #     self.widget = None
+
+    def testFound(self):
+        self.assertEqual(self.sol.strStr("abcde","cde"), 2)
+        self.assertEqual(self.sol.strStr("abcde","bcd"), 1)
+        self.assertEqual(self.sol.strStr("abcde","abc"), 0)
+
