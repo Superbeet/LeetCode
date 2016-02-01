@@ -41,25 +41,22 @@ class Solution(object):
 
         return count
 
-    def color_island(self, grid, w, h, j, i):
+    def color_island(self, grid, w, h, y, x):
         # DFS here
-        if j<0 or j>=h or i<0 or i>=w:
+        if y<0 or y>=h or x<0 or x>=w:
             return
 
-        if grid[j][i] == "2":
+        if grid[y][x] == "2":
             return
         
-        if grid[j][i] == "1":
+        if grid[y][x] == "1":
 
-            grid[j][i] = "2"
-            # up
-            self.color_island(grid, w, h, j-1, i)
-            # down
-            self.color_island(grid, w, h, j+1, i)
-            # left
-            self.color_island(grid, w, h, j, i-1)
-            # right
-            self.color_island(grid, w, h, j, i+1)
+            grid[y][x] = "2"
+
+            for dy, dx in [(-1,0),(1,0),(0,1),(0,-1)]:
+                ny = y+dy
+                nx = x+dx
+                self.color_island(grid, w, h, ny, nx)
 
         return
 

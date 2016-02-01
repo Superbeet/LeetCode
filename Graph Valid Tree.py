@@ -26,7 +26,7 @@ class UnionFind(object):
     def find(self, m):
         return self.ids[m]
 
-    def are_connected(self, m, n):
+    def connected(self, m, n):
         return self.find(m) == self.find(n)
 
     def count(self):
