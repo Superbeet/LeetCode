@@ -1,35 +1,36 @@
 class Solution(object):
-    def validTree(self, n, edges):
+    def countComponents(self, n, edges):
         """
         :type n: int
         :type edges: List[List[int]]
-        :rtype: bool
+        :rtype: int
         """
         # initial
         ids = range(0, n)
 
+        print ids
+
         for pair in edges:
-            i = ids[pair[0]]
-            j = ids[pair[1]]
-            
-            if i!=j:
-                ids[i] = j
+            i = root(pair[0])
+            j = root(pair[1])
+            ids[i] = j
             # ids[i] = ids[j]
+        print ids
 
         count = 0
 
         id_set = set(ids)
-        print id_set
+
         return len(id_set)
 
-    # def root(ids, i):
+    def root(self, ids, i):
         
-    #     while i!=ids[i]:
-    #         ids[i] = ids[ids[i]]
-    #         i = ids[i]
+        while i!=ids[i]:
+            ids[i] = ids[ids[i]]
+            i = ids[i]
 
-    #     return i
+        return i
 
 sol = Solution()
 edges = [[0,1],[0,2],[1,3],[1,4],[2,5]]
-sol.validTree(edges)
+sol.countComponents(6, edges)

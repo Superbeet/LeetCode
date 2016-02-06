@@ -50,6 +50,7 @@ class Solution(object):
 
                 if nb in hashtable:
                     p2.neighbors.append(hashtable[nb])
+                    
                 else:
                     temp = UndirectedGraphNode(nb.label)
                     p2.neighbors.append(temp)
