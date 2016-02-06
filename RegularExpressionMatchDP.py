@@ -18,33 +18,33 @@ p[j] = ba*		ba*		ba*
 
 class Solution(object):
     def isMatch(self, s, p):
-		match = [[False for x in range(len(p)+1)] for x in range(len(s)+1)] 
-		# print match
-		match[0][0] = True
-		
-		for i in xrange(0, len(s)+1):
-			for j in xrange(1, len(p)+1):
+        match = [[False for x in range(len(p)+1)] for x in range(len(s)+1)] 
+        # print match
+        match[0][0] = True
+        
+        for i in xrange(0, len(s)+1):
+            for j in xrange(1, len(p)+1):
 
-				if i!=0:
+                if i!=0:
 
-					if j>1 and p[j-1] == '*':
-						match[i][j] = match[i][j-2] or match[i][j-1] or (match[i-1][j] and self.isSame(s[i-1], p[j-2]))
+                    if j>1 and p[j-1] == '*':
+                        match[i][j] = match[i][j-2] or match[i][j-1] or (match[i-1][j] and self.isSame(s[i-1], p[j-2]))
 
-					elif match[i-1][j-1] and self.isSame(s[i-1], p[j-1]):
-						match[i][j] = True
-				
-				# if i == 0
-				elif j>=2 and p[j-1]=='*' and match[0][j-2]:
-					match[0][j] = True
+                    elif match[i-1][j-1] and self.isSame(s[i-1], p[j-1]):
+                        match[i][j] = True
+                
+                # if i == 0
+                elif j>=2 and p[j-1]=='*' and match[0][j-2]:
+                    match[0][j] = True
 
-		# print match
-		return match[len(s)][len(p)]
+        # print match
+        return match[len(s)][len(p)]
 
     def isSame(self, s, p):
-    	if p == '.' or s == p:
-    		return True
-			
-    	return False
+        if p == '.' or s == p:
+            return True
+            
+        return False
 
 sol = Solution()
 from time import clock

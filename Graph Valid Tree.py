@@ -5,31 +5,46 @@ class Solution(object):
         :type edges: List[List[int]]
         :rtype: bool
         """
-        # initial
-        ids = range(0, n)
+        uf = UnionFind(n)
 
-        for pair in edges:
-            i = ids[pair[0]]
-            j = ids[pair[1]]
-            
-            if i!=j:
-                ids[i] = j
-            # ids[i] = ids[j]
-
-        count = 0
-
-        id_set = set(ids)
-        print id_set
-        return len(id_set)
-
-    # def root(ids, i):
+        for i in xrange(0, len(edges)):
+            if not uf.union(edges[i][0], edges[i][1]):
+                return False
         
-    #     while i!=ids[i]:
-    #         ids[i] = ids[ids[i]]
-    #         i = ids[i]
+        return uf.count() == 1
 
-    #     return i
+class UnionFind(object):
 
-sol = Solution()
-edges = [[0,1],[0,2],[1,3],[1,4],[2,5]]
-sol.validTree(edges)
+    def __init__(self, size):
+        self.ids = [None] * size
+
+        for i in xrange(0, len(self.ids)):
+            self.ids[i] = i
+
+        self.cnt = size
+
+    def find(self, m):
+        return self.ids[m]
+
+    def connected(self, m, n):
+        return self.find(m) == self.find(n)
+
+    def count(self):
+        return self.cnt
+
+    def union(self, m, n):
+        src = self.find(m)
+        dst = self.find(n)
+        # m, n not in same set yet
+        if src!=dst:
+            for i in xrange(0, len(self.ids)):
+                if self.ids[i] == src:
+                    self.ids[i] = dst
+
+            self.cnt -= 1
+            
+            return True
+        # m,n already in same set
+        else:
+        	# Find a loop
+            return False

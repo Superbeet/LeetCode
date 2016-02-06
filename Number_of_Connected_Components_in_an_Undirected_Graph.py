@@ -1,3 +1,44 @@
+class UnionFind(object):
+
+    def __init__(self, size):
+        self.ids = range(size)
+        self.cnt = size
+        
+    def count(self):
+        return self.cnt
+
+    def union(self, m, n):
+    	print "m,n -> %s,%s" %(m, n)
+        i = self.root(m)
+        j = self.root(n)
+
+        print "i,j -> %s,%s" %(i, j)
+        
+        if i!=j:
+            self.ids[i] = j
+            self.cnt -= 1
+            print self.ids
+            print ""
+            return True
+        # m,n already in same set
+        else:
+            # Find a loop
+            return False
+
+    def find(self, m):
+        return self.ids[m]
+
+    def connected(self, m, n):
+        return self.find(m) == self.find(n)
+
+    def root(self, i):
+
+        while i!=self.ids[i]:
+            self.ids[i] = self.ids[self.ids[i]]
+            i = self.ids[i]
+
+        return i
+
 class Solution(object):
     def countComponents(self, n, edges):
         """
@@ -5,32 +46,17 @@ class Solution(object):
         :type edges: List[List[int]]
         :rtype: int
         """
-        # initial
-        ids = range(0, n)
-
-        print ids
+        union_find = UnionFind(n)
 
         for pair in edges:
-            i = root(pair[0])
-            j = root(pair[1])
-            ids[i] = j
-            # ids[i] = ids[j]
-        print ids
+            union_find.union(pair[0], pair[1])
 
-        count = 0
-
-        id_set = set(ids)
-
-        return len(id_set)
-
-    def root(self, ids, i):
-        
-        while i!=ids[i]:
-            ids[i] = ids[ids[i]]
-            i = ids[i]
-
-        return i
+        return union_find.count()
 
 sol = Solution()
-edges = [[0,1],[0,2],[1,3],[1,4],[2,5]]
-sol.countComponents(6, edges)
+
+edges = [
+    [2,1],[2,3],[4,5]
+]
+
+print sol.countComponents(6, edges)
