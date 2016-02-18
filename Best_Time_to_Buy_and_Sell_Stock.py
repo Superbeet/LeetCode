@@ -54,7 +54,7 @@ class Solution(object):
                 res += prices[i]-prices[i-1]
         return res
 
-"""122. Best Time to Buy and Sell Stock II [Medium]
+"""122. Best Time to Buy and Sell Stock III [Hard]
 Say you have an array for which the ith element is the price of a given stock on day i.
 Design an algorithm to find the maximum profit. You may complete at most two transactions.
 
@@ -96,3 +96,40 @@ class Solution(object):
             res = max(res, right_max_profit+left_profits[j])
 
         return res
+
+"""188. Best Time to Buy and Sell Stock IV [Hard]
+Say you have an array for which the ith element is the price of a given stock on day i.
+Design an algorithm to find the maximum profit. You may complete at most k transactions.
+"""
+class Solution(object):
+    def maxProfit(self, k, prices):
+        """
+        :type k: int
+        :type prices: List[int]
+        :rtype: int
+        """
+        size = len(prices):
+        if size == 0:
+            return 0
+
+        if k>=size:
+            self.solveMaxProfit(prices)
+
+        global_max = [0 for i in range(0, k+1)]
+        local_max  = [0 for i in range(0, k+1)]
+
+        for j in xrange(1, size):
+            diff = prices[i]-prices[i-1]
+            for i in xrange(k, 0, -1):
+                local_max[i] = max(global_max[i-1]+max(diff,0), local_max[i]+diff)
+                global_max[i]  = max(local_max[i], global_max[i])
+
+        return global_max[k]
+
+    def solveMaxProfit(prices):
+        res = 0 
+        for i in xrange(1, len(prices)):
+            if prices[i]>prices[i-1]:
+                res += prices[i]-prices[i-1]
+        return res
+
