@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*
 """Regular Expression Matching
 
 Implement regular expression matching with support for '.' and '*'.
@@ -46,29 +45,43 @@ dp[i][j] = dp[i][j - 2];
 dp[i][j] = dp[i -1][j] && (p.charAt(j - 2) == s.charAt(i - 1) || p.charAt(j - 2) == '.'
 
 """
-class Solution:
-	def isEqual(self, s0, p0):
-		if s0 == p0 or p0=='.':
-			return True
-		else:
-			return False
-		
-	def isMatch(self, s, p):
-		if len(p)==0: 
-			return len(s)==0
-		
-		if len(p)==1 or p[1] != '*':
-			if len(s) and self.isEqual(s[0], p[0]):
-				return self.isMatch(s[1:], p[1:])
-			else:
-				return False
-		
-		else:
-			if len(s) and self.isEqual(s[0], p[0]):
-				return self.isMatch(s, p[2:]) or self.isMatch(s[1:],p)
-			else:
-				return self.isMatch(s, p[2:])
-			
-sol = Solution()
-print sol.isMatch("abc","a*a*a*a*a*bc")
-print sol.isMatch("aa","a.")
+
+
+# 92ms Dynamic Programming
+class Solution(object):
+    def isMatch(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: bool
+        """
+        dp = [[False for j in range(len(p)+1)] for i in range(len(s)+1)]
+        dp[0][0] = True
+
+        #i=0
+        for j in xrange(0, len(p)+1):
+            if j>1 and p[j-1]=='*':
+                dp[0][j] = dp[0][j-1] or dp[0][j-2]
+
+        for i in xrange(1, len(s)+1):
+            for j in xrange(1, len(p)+1):
+
+                if p[j-1]=='.':
+                    dp[i][j] = dp[i-1][j-1]
+
+                elif p[j-1]=='*':
+
+                    if dp[i][j-2]:
+                        dp[i][j] = True
+                    
+                    elif dp[i][j-1]:
+                        dp[i][j] = True
+                    
+                    elif dp[i-1][j] and (p[j-2]==s[i-1] or p[j-2]=='.'):
+                        dp[i][j] = True
+
+                elif dp[i-1][j-1] and p[j-1]==s[i-1]:
+                    dp[i][j] = True
+
+        return dp[len(s)][len(p)]
+
