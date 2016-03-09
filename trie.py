@@ -1,9 +1,9 @@
 class TrieNode(object):
-	def __init__(self):
+	def __init__(self, value = None):
 		"""
 		Initialize your data structure here.
 		"""
-		self.value = None
+		self.value = value
 		self.children = {}
 		
 class Trie(object):
@@ -24,13 +24,13 @@ class Trie(object):
 		
 		for char in word:
 			if char not in node.children:
-				new_node = TrieNode()
+				new_node = TrieNode(char)
 				node.children[char] = new_node
 				node = new_node
 			else:
 				node = node.children[char]
 				
-		new_node.value = None
+		# new_node.value = None
 
 	def search(self, word):
 		"""
@@ -75,11 +75,9 @@ class Trie(object):
 				
 		return True
 		
-
-# Your Trie object will be instantiated and called as such:
+## Your Trie object will be instantiated and called as such:
 trie = Trie()
 trie.insert("somestring")
 trie.insert("otherstring")
 print trie.search("somestring")
 print trie.startsWith("othersome")
-

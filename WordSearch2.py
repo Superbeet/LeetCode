@@ -1,11 +1,3 @@
-class TrieNode(object):
-	def __init__(self):
-		"""
-		Initialize your data structure here.
-		"""
-		self.isWord = True
-		self.children = {}
-		
 class Trie(object):
 
 	def __init__(self):
@@ -24,40 +16,21 @@ class Trie(object):
 		
 		for char in word:
 			if char not in node.children:
-				new_node = TrieNode()
+				new_node = TrieNode(char)
 				node.children[char] = new_node
 				node = new_node
 			else:
 				node = node.children[char]
-
-		node.isWord = True
-
-	def delete(self, word):
-		node = self.root
-		queue = []
-
-		for letter in word:
-			queue.append((letter, node))
-
-			if letter not in node.children:
-				return False
-			else:
-				node = node.children[letter]
-
-		if not node.isWord:
-			return False
-
-		if len(node.children):
-			node.isWord = False
-
-		else:
-			for letter, node in queue[::-1]:
-				del node.children[letter]
-				if len(node.children) or node.isWord:
-					break
-		return True
+				
+		# new_node.value = None
 
 
-
-
-			
+class Solution(object):
+    def findWords(self, board, words):
+        """
+        :type board: List[List[str]]
+        :type words: List[str]
+        :rtype: List[str]
+        """
+        
+    def dfs(self, word, node, x, y)
