@@ -75,11 +75,11 @@ class Trie(object):
 				
 		return True
 		
-		
 
 # Your Trie object will be instantiated and called as such:
-# trie = Trie()
-# trie.insert("somestring")
-# trie.insert("otherstring")
-# print trie.search("somestring")
-# print trie.startsWith("othersome")
+trie = Trie()
+trie.insert("somestring")
+trie.insert("otherstring")
+print trie.search("somestring")
+print trie.startsWith("othersome")
+
