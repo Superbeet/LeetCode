@@ -33,11 +33,12 @@ class Solution(object):
         for a in xrange(0, n+1):
             for b in xrange(0, int(math.sqrt(n-a)+1)):
                 dp[a+b*b] = min(dp[a]+1, dp[a+b*b])
+            print dp
         return dp[n] 
 
 # Time out O(n^2)
 import math, sys
-class Solution(object):
+class Solution2(object):
     _dp = [0]
     def numSquares(self, n):
         # dp.append(0)
@@ -54,6 +55,6 @@ class Solution(object):
 
 import timeit
 
-sol = Solution()
-# print sol.numSquares(6)
-print(timeit.timeit("sol.numSquares(5673)", setup="from __main__ import sol",number=100))
+sol = Solution2()
+print sol.numSquares(1024)
+# print(timeit.timeit("sol.numSquares(5673)", setup="from __main__ import sol",number=100))
