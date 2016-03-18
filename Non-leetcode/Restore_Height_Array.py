@@ -82,6 +82,64 @@ def restore_the_line_2(heights, infronts):
 
     return result
 
+"""
+Lists:
+                               Complexity
+Operation     | Example      | Class         | Notes
+--------------+--------------+---------------+-------------------------------
+Index         | l[i]         | O(1)	     |
+Store         | l[i] = 0     | O(1)	     |
+Length        | len(l)       | O(1)	     |
+Append        | l.append(5)  | O(1)	     |
+Pop	      | l.pop()      | O(1)	     | same as l.pop(-1), popping at end
+Clear         | l.clear()    | O(1)	     | similar to l = []
+
+Slice         | l[a:b]       | O(b-a)	     | l[1:5]:O(l)/l[:]:O(len(l)-0)=O(N)
+Extend        | l.extend(...)| O(len(...))   | depends only on len of extension
+Construction  | list(...)    | O(len(...))   | depends on length of argument
+
+check ==, !=  | l1 == l2     | O(N)          |
+Insert        | l[a:b] = ... | O(N)	     |
+Delete        | del l[i]     | O(N)	     | 
+Remove        | l.remove(...)| O(N)	     | 
+Containment   | x in/not in l| O(N)	     | searches list
+Copy          | l.copy()     | O(N)	     | Same as l[:] which is O(N)
+Pop	      | l.pop(0)     | O(N)	     | 
+Extreme value | min(l)/max(l)| O(N)	     |
+Reverse	      | l.reverse()  | O(N)	     |
+Iteration     | for v in l:  | O(N)          |
+
+Sort          | l.sort()     | O(N Log N)    | key/reverse doesn't change this
+Multiply      | k*l          | O(k N)        | 5*l is O(N): len(l)*l is O(N**2)
+"""
+# Time - O(n) Spcare - O(n)
+def find_empty_index(k, empty_indexs):
+	"""
+	Return the kth empty space
+	"""
+	index = empty_indexs.pop(k)
+	return index
+		
+def restore_the_line_3(heights, infronts):
+	if not infronts or not heights or len(infronts)!=len(heights):
+		return 
+	
+	size = len(heights)
+	empty_index_list = range(size)
+
+	size = len(infronts)
+	ordered_list = sorted(zip(heights, infronts))
+	heights = [x for x,y in ordered_list]
+	infronts  = [y for x,y in ordered_list]
+
+	result = [None for x in range(size)]
+
+	for i in xrange(0, size):
+		pos = find_empty_index(infronts[i], empty_index_list)
+		result[pos] = heights[i]
+
+	return result
+    
 # O(n*log(n)) n-amount of numbers log(n)-depth of tree
 class Node:
     def __init__(self, start, end):
@@ -130,12 +188,39 @@ def order(heights, infronts):
 
     return result
 
+# O(n) - Using an additional array to store empty space position
+def find_empty_index(k, empty_index_list):
+	"""
+	Return the kth empty space
+	"""
+	index = empty_index_list.pop(k)
+	return index
+		
+def restore_the_line_3(heights, infronts):
+    if not infronts or not heights or len(infronts)!=len(heights):
+        return 
+	
+	empty_index_list = range(size)
+	print empty_index_list
+	
+    size = len(infronts)
+    ordered_list = sorted(zip(heights, infronts))
+    heights = [x for x,y in ordered_list]
+    infronts  = [y for x,y in ordered_list]
 
-# A = [5, 3, 2, 6, 1, 4]
-# B = [0, 1, 2, 0, 3, 2]
-# print restore_the_line_2(A, B)
+    result = [None for x in range(size)]
+
+    for i in xrange(0, size):
+        pos = find_empty_index(infronts[i], empty_index_list)
+        result[pos] = heights[i]
+
+    return result
+
+A = [5, 3, 2, 6, 1, 4]
+B = [0, 1, 2, 0, 3, 2]
+print restore_the_line_3(A, B)
     
-A = [ 86, 77 ]
-B = [ 0, 1 ]
-print order(A, B)
+# A = [ 86, 77 ]
+# B = [ 0, 1 ]
+# print order(A, B)
             
