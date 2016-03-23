@@ -6,6 +6,7 @@
 #         self.right = None
 
 class Solution(object):
+
 	def isBalanced(self, root):
 		"""
 		:type root: TreeNode
@@ -22,6 +23,7 @@ class Solution(object):
 			return -1
 		
 		right_depth = self.find_depth(root.right)
+		
 		if right_depth == -1:
 			return -1
 		
