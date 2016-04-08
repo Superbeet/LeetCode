@@ -34,7 +34,11 @@ class Solution(object):
 				if s[:i] in word_dict:
 					self.dfs(s[i:], word_dict, string+s[:i]+" ")		
 
-					
+"""
+这里加上一个possible数组，如同WordBreak I里面的DP数组一样，用于记录区间拆分的可能性
+
+Possible[i] = true 意味着 [i,n]这个区间上有解
+"""
 class Solution(object):
 	def wordBreak(self, s, wordDict):
 		"""
@@ -71,5 +75,3 @@ s = "leetcode"
 dict = ["leet", "code"]
 print sol.check(s, dict)	
 print sol.wordBreak(s, dict)
-		
-	
