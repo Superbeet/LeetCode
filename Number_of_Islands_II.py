@@ -27,7 +27,7 @@ class UnionFind(object):
 
         if i!=j:
             if self.weight[i]<self.weight[j]:
-                self.ids[i] = j 
+                self.ids[i] = j
                 self.weight[j]+=self.weight[i]
             else:
                 self.ids[j] = i
