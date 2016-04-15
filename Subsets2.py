@@ -17,8 +17,6 @@ class Solution1(object):
 		for num in nums:
 			
 			for i in range(0, len(array_list)):
-
-				item = []
 				
 				item = copy.copy(array_list[i])
 				

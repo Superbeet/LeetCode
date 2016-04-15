@@ -28,7 +28,8 @@ class Solution(object):
                     adj_index = adj_y*n+adj_x
 
                     if 0<=adj_x<n and 0<=adj_y<m and self.ids[adj_index]!=-1:
-                        self.union(index, adj_index)
+                        if self.union(index, adj_index):
+                            self.cnt -= 1
 
             res.append(self.cnt)
 
@@ -52,8 +53,10 @@ class Solution(object):
                 self.ids[j] = i
                 self.size[i] += self.size[j]
 
-            self.cnt -= 1
-
+            return True
+            
+        else:
+            return False
 
 sol = Solution()
 
