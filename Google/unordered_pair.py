@@ -24,7 +24,6 @@ def merge_sort(my_array):
 def merge(my_array, left, right):
 	# print left, right
 	count = 0
-	temp = -1000000 # negetive min int
 	merge_array = []
 	while left and right:
 		# print "left -> %s, right -> %s" %(left[0], right[0])
@@ -32,8 +31,8 @@ def merge(my_array, left, right):
 			merge_array.append(left.pop(0))
 		else:
 			count += len(left)	#tricky point
-			temp = right.pop(0)
-			merge_array.append(temp)
+			merge_array.append(right.pop(0))
+
 	merge_array.extend(right if right else left)
 	my_array = copy.deepcopy(merge_array)
 	return count

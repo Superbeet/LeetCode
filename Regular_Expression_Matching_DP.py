@@ -19,7 +19,8 @@ isMatch("aa", ".*") → true
 isMatch("ab", ".*") → true
 isMatch("aab", "c*a*b") → true
 
-
+s-index->i
+s-index->j
 1. 正常字符，即不是'*'也不是'.'
 这种比较好处理，只要两个字符串向前一位能够匹配的同时两字符串最后一个字符相等, 可得到 
 

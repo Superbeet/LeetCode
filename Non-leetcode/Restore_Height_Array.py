@@ -53,6 +53,7 @@ def restore_the_line(heights, infronts):
                     infronts[j] -= 1
     return result
 
+# O(n^2)
 def restore_the_line_2(heights, infronts):
     if not infronts or not heights or len(infronts)!=len(heights):
         return 
@@ -82,36 +83,6 @@ def restore_the_line_2(heights, infronts):
 
     return result
 
-"""
-Lists:
-                               Complexity
-Operation     | Example      | Class         | Notes
---------------+--------------+---------------+-------------------------------
-Index         | l[i]         | O(1)	     |
-Store         | l[i] = 0     | O(1)	     |
-Length        | len(l)       | O(1)	     |
-Append        | l.append(5)  | O(1)	     |
-Pop	      | l.pop()      | O(1)	     | same as l.pop(-1), popping at end
-Clear         | l.clear()    | O(1)	     | similar to l = []
-
-Slice         | l[a:b]       | O(b-a)	     | l[1:5]:O(l)/l[:]:O(len(l)-0)=O(N)
-Extend        | l.extend(...)| O(len(...))   | depends only on len of extension
-Construction  | list(...)    | O(len(...))   | depends on length of argument
-
-check ==, !=  | l1 == l2     | O(N)          |
-Insert        | l[a:b] = ... | O(N)	     |
-Delete        | del l[i]     | O(N)	     | 
-Remove        | l.remove(...)| O(N)	     | 
-Containment   | x in/not in l| O(N)	     | searches list
-Copy          | l.copy()     | O(N)	     | Same as l[:] which is O(N)
-Pop	      | l.pop(0)     | O(N)	     | 
-Extreme value | min(l)/max(l)| O(N)	     |
-Reverse	      | l.reverse()  | O(N)	     |
-Iteration     | for v in l:  | O(N)          |
-
-Sort          | l.sort()     | O(N Log N)    | key/reverse doesn't change this
-Multiply      | k*l          | O(k N)        | 5*l is O(N): len(l)*l is O(N**2)
-"""
 # Time - O(n) Spcare - O(n)
 def find_empty_index(k, empty_indexs):
 	"""
@@ -150,11 +121,11 @@ class Node:
         self.right = None
 
 def build_tree(node):
-    if node.end - node.start == 1:
+    if node.end - node.start == 0:
         return
     mid = (node.start + node.end)/2
     node.left = Node(node.start, mid)
-    node.right = Node(mid, node.end)
+    node.right = Node(mid+1, node.end)
     build_tree(node.left)
     build_tree(node.right)
 
@@ -183,7 +154,6 @@ def order(heights, infronts):
 
     for (h,i) in ordered_list:
         pos = find_pos(root, i)
-        print pos
         result[pos] = h
 
     return result

@@ -46,29 +46,68 @@ dp[i][j] = dp[i][j - 2];
 dp[i][j] = dp[i -1][j] && (p.charAt(j - 2) == s.charAt(i - 1) || p.charAt(j - 2) == '.'
 
 """
-class Solution:
-	def isEqual(self, s0, p0):
-		if s0 == p0 or p0=='.':
-			return True
-		else:
-			return False
-		
-	def isMatch(self, s, p):
-		if len(p)==0: 
-			return len(s)==0
-		
-		if len(p)==1 or p[1] != '*':
-			if len(s) and self.isEqual(s[0], p[0]):
-				return self.isMatch(s[1:], p[1:])
-			else:
-				return False
-		
-		else:
-			if len(s) and self.isEqual(s[0], p[0]):
-				return self.isMatch(s, p[2:]) or self.isMatch(s[1:],p)
-			else:
-				return self.isMatch(s, p[2:])
-			
-sol = Solution()
+class Solution1:
+    def isEqual(self, s0, p0):
+        if s0 == p0 or p0=='.':
+            return True
+        else:
+            return False
+        
+    def isMatch(self, s, p):
+        if len(p)==0: 
+            return len(s)==0
+        
+        if len(p)==1 or p[1] != '*':
+            if len(s) and self.isEqual(s[0], p[0]):
+                return self.isMatch(s[1:], p[1:])
+            else:
+                return False
+        
+        else:
+            if len(s) and self.isEqual(s[0], p[0]):
+                return self.isMatch(s, p[2:]) or self.isMatch(s[1:],p)
+            else:
+                return self.isMatch(s, p[2:])
+
+class Solution2:
+    def is_same(self, s, p):
+        if s[0]==p[0] or p[0]==".":
+            return True
+        return False
+
+    def isMatch(self, s, p):
+
+        if len(p)==0:  
+            return len(s)==0
+
+        if len(p)==1 or p[1]!='*':
+            if len(s)==0:
+                return False
+
+            if self.is_same(s[0], p[0]):
+                return False
+                
+            return self.isMatch(s[1:], p[1:])
+            
+        i =- 1
+        length = len(s)
+
+        while i<length and (i==-1 or p[0]=='.' or p[0]==s[i]):
+            if self.isMatch(s[i+1:], p[2:]):                 
+                return True
+                
+            i+=1
+            
+        return False
+
+sol = Solution1()
+print sol.isMatch("aa","a") # false
+print sol.isMatch("aaa","aa") # false
+print sol.isMatch("aa","aa") # true
+print sol.isMatch("aa", "a*") # true
+print sol.isMatch("aa", ".*") # true
+print sol.isMatch("ab", ".*") # true
+print sol.isMatch("aab", "c*a*b") # true
 print sol.isMatch("abc","a*a*a*a*a*bc")
 print sol.isMatch("aa","a.")
+print sol.isMatch("ab",".*c")
