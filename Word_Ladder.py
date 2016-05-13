@@ -1,3 +1,4 @@
+# BFS
 import collections 
 
 class Solution(object):
@@ -10,34 +11,61 @@ class Solution(object):
         """
         count = 1
         check = set()
-        queue = collections.deque()
+        queue = collections.deque([beginWord, ""])
         
-        queue.append(beginWord)
-        
-        while queue:
-            
-            word = queue.popleft()
-            
+        while queue:       
+            word = queue.popleft()     
             if word == endWord:
                 return count
-                
+            if word == "" and queue:
+                count += 1
+                queue.append("")
             for i in xrange(0, len(word)):
-                for asc in xrange(97, 97+26):
-                    word = word[:i] + chr(asc) + word[i+1:]
-            
-                    if word == "" and queue:
-                        count += 1
-                        queue.append("")
-                    
-                    if word not in check and word in wordList:
-                        check.add(word)
-                        queue.append(word)
-        
+                for letter in 'abcdefghijklmnopqrstuvwxyz':
+                    new_word = word[:i] + letter + word[i+1:]             
+                    if new_word not in check and new_word in wordList:
+                        check.add(new_word)
+                        queue.append(new_word)
         return 0
 
-bw = "a"
-ew = "c"
-wl = ["a", "b", "c"]
+# # Double BFS
+# class Solution(object):
+#     def ladderLength(self, beginWord, endWord, wordList):
+
+#         forward, backward, count = set([beginWord]), set([endWord]), 2
+
+#         while forward and backward:
+#             if len(forward) > len(backward):
+#                 forward, backward = backward, forward
+
+#             temp = set()
+
+#             for word in forward:
+#                 # word = forward.popleft()
+#                 for i in xrange(len(word)):
+#                     for letter in 'abcdefghijklmnopqrstuvwxyz':
+#                         candidate = word[:i] + letter + word[i + 1:]
+
+#                         if candidate in backward:
+#                             return count
+
+#                         if candidate in wordList:
+#                             wordList.remove(candidate)
+#                             temp.add(candidate)
+
+#             forward = temp
+#             count += 1
+
+#         return 0
 
 sol = Solution()
+
+# bw = "a"
+# ew = "c"
+# wl = set(["a", "b", "c"])
+
+bw = "hot"
+ew = "dog"
+wl = set(["hot","dog"])
+
 print sol.ladderLength(bw, ew, wl)
