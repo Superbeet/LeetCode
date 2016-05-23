@@ -1,3 +1,47 @@
+# -*- coding: utf-8 -*- 
+"""
+# DP: time: O(n^2*k), space: O(nk), 假设k表示平均每个长度对应解的个数
+"""
+class Solution(object):
+    def wordBreak(self, s, wordDict):
+        size = len(s)
+        hashmap = {0:[]}
+        hashmap[0].append("")
+        
+        if not self.helper(s, wordDict):
+            return []
+
+        for i in xrange(1, len(s)+1):
+            for j in xrange(0, i):
+                if j in hashmap and s[j:i] in wordDict:
+                    if i not in hashmap:
+                        hashmap[i] = []
+                    for string in hashmap[j]:
+                        if string == "":
+                            new_string = s[j:i]
+                        else:
+                            new_string = string+" "+s[j:i]
+                        hashmap[i].append(new_string)
+        return hashmap[size]
+    
+    # Optional: Quick Checking
+    def helper(self, s, word_dict):
+        n = len(s) + 1
+        
+        dp = [False for i in range(n)]
+        dp[0] = True
+        
+        for i in xrange(1, n):
+            for j in xrange(0, i):
+                if dp[j] and s[j:i] in word_dict:
+                    dp[i] = True
+                    break
+        
+        return dp[n-1]
+
+"""
+DFS + Pruning
+"""
 class Solution(object):
 	def wordBreak(self, s, wordDict):
 		"""
@@ -35,6 +79,8 @@ class Solution(object):
 					self.dfs(s[i:], word_dict, string+s[:i]+" ")		
 
 """
+DFS + DP(real-time pruning)
+
 这里加上一个possible数组，如同WordBreak I里面的DP数组一样，用于记录区间拆分的可能性
 
 Possible[i] = true 意味着 [i,n]这个区间上有解
@@ -61,6 +107,7 @@ class Solution(object):
 		
 		for i in xrange(start, size):
 			segment = string[start:i+1]
+
 			if (segment in dictionary) and self.possible[i+1]:
 				pre_result = result
 				pre_size = len(sols)
@@ -69,9 +116,56 @@ class Solution(object):
 				if len(sols) == pre_size:
 					self.possible[i+1] = False
 				result = pre_result
-					
+
+"""
+DFS + Memorization
+"""
+class Solution(object):
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: Set[str]
+        :rtype: List[str]
+        """
+        if not s:
+            return []
+        
+        return self.dfs(s, wordDict, {})
+    
+    def dfs(self, s, word_dict, memo):
+        
+        if s in memo:
+            return memo[s]
+        
+        sol = []
+        
+        if s == "":
+            sol.append("")
+            return sol
+        
+        else:
+            for i in xrange(1, len(s)+1):
+                prefix = s[:i]
+                
+                if prefix in word_dict:
+                    segments = self.dfs(s[i:], word_dict, memo)
+                    for segment in segments:
+                        if segment=="":
+                            sol.append(prefix)
+                        else:
+                            sol.append(prefix + " " + segment)
+            
+        memo[s] = sol
+        return sol
+
+"""
+DP (bottom-up)
+"""
+class Solution(object):
+    def wordBreak(self, s, wordDict):
+
 sol = Solution()
-s = "leetcode"
-dict = ["leet", "code"]
-print sol.check(s, dict)	
+s = "catsanddog"
+dict = ["cat","cats","and","sand","dog"]
+# print sol.check(s, dict)	
 print sol.wordBreak(s, dict)
