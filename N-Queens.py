@@ -1,75 +1,67 @@
-#include <stdio.h>
-#include <stdlib.h>
+"""
+[
+ [".Q..",  // Solution 1
+  "...Q",
+  "Q...",
+  "..Q."],
 
-const int N=20;   //最多放皇后的个数
-int q[N];         //各皇后所在的行号
-int cont = 0;     //统计解得个数
-//输出一个解
-void print(int n)
-{
-    int i,j;
-    cont++;
-    printf("第%d个解：",cont);
-    for(i=1;i<=n;i++)
-        printf("(%d,%d) ",i,q[i]);
-    printf("\n");
-    for(i=1;i<=n;i++)        //行
-    {                
-        for(j=1;j<=n;j++)    //列
-        {
-            if(q[i]!=j)
-                printf("x ");
-            else 
-                printf("Q "); 
-        }
-        printf("\n");
-    }
-}
-//检验第i行的k列上是否可以摆放皇后
-int find(int i,int k)  
-{
-    int j=1;
-    while(j<i)  //j=1~i-1是已经放置了皇后的行
-    {
-        //第j行的皇后是否在k列或(j,q[j])与(i,k)是否在斜线上
-        if(q[j]==k || abs(j-i)==abs(q[j]-k)) 
-            return 0;
-        j++;
-    }
-    return 1;
-}
-//放置皇后到棋盘上
-void place(int k,int n)  
-{
-    int j;
-    if(k>n)
-        print(n);
-    else
-    {
-        for(j=1;j<=n;j++)   //试探第k行的每一个列
-        {
-            if(find(k,j))
-            {
-                q[k] = j;
-                place(k+1,n);  //递归总是在成功完成了上次的任务的时候才做下一个任务
-            }
-        }
-    }
-}
+ ["..Q.",  // Solution 2
+  "Q...",
+  "...Q",
+  ".Q.."]
+]
+"""
+# O(N!) after prunning
+import copy
+class Solution(object):
+    def solveNQueens(self, n):
+        """
+        :type n: int
+        :rtype: List[List[str]]
+        """
+        if n<0:
+            return []
 
-int main(void)
-{
-    int n;
-    printf("请输入皇后的个数(n<=20),n=:");
-    scanf("%d",&n);
-    if(n>20)
-        printf("n值太大，不能求解!\n");
-    else
-    {
-        printf("%d皇后问题求解如下(每列的皇后所在的行数):\n",n);
-        place(1,n);        //问题从最初状态解起
-        printf("\n");
-    }
-    system("pause");
-    return 0;
-}
+        res = []
+        row_col = [-1 for i in range(n)]
+        self.place(n, 0, row_col, res)
+
+        return res
+
+    def printf_sol(self, size, row_col):
+        sol = []
+        for queen_loc in row_col:
+            row_str = "."*queen_loc + "Q" + "."*(size-1-queen_loc)
+            sol.append(row_str)
+        return sol      
+
+    def check_valid(self, row, col, row_col):
+        for next_row in xrange(row-1, -1, -1):
+            if row_col[next_row] == col:
+                return False
+            if abs(row - next_row) == abs(row_col[next_row] - col):
+                return False
+        return True
+
+    def place(self, size, row, row_col, res):
+        if row == size:
+            # res.append(copy.deepcopy(row_col))
+            row_str = self.printf_sol(size, row_col)
+            res.append(row_str)
+            return
+
+        for col in xrange(size):
+            if self.check_valid(row, col, row_col): ## Pruning
+                row_col[row] = col
+                self.place(size, row+1, row_col, res)
+                row_col[row] = -1
+
+def print_chessboard(chess_array):
+    for chess in chess_array:
+        for row in chess:
+            print row
+        print ""
+
+sol = Solution()
+result = sol.solveNQueens(4)
+print_chessboard(result)
