@@ -7,36 +7,47 @@ class TreeNode(object):
 
 
 """
-Why right_tail firstly? No idea
+Divide and Conquer
+
+    1
+  /    \
+ 2     5
+  \       \
+   3      6 <- rightTail
+     \
+      4  <- leftTail
+
+1 - 2 - 3 - 4 - 5 - 6
+
 """
-# class Solution(object):
-#     def flatten(self, root):
-#         """
-#         :type root: TreeNode
-#         :rtype: void Do not return anything, modify root in-place instead.
-#         """
+class Solution(object):
+    def flatten(self, root):
+        """
+        :type root: TreeNode
+        :rtype: void Do not return anything, modify root in-place instead.
+        """
 
-#         def flattenBT(node):
-#             if not node:
-#                 return None
-#             left_tail = flattenBT(node.left)
-#             right_tail = flattenBT(node.right)
+        def flattenBT(node):
+            if not node:
+                return None
+            left_tail = flattenBT(node.left)
+            right_tail = flattenBT(node.right)
             
-#             if node.left:
-#                 temp = node.right
-#                 node.right = node.left
-#                 node.left = None
-#                 left_tail.right = temp
+            if node.left:
+                temp = node.right
+                node.right = node.left
+                node.left = None
+                left_tail.right = temp
 
-#             if right_tail:
-#                 return right_tail
+            if right_tail:
+                return right_tail
 
-#             if left_tail:
-#                 return left_tail
+            if left_tail:
+                return left_tail
 
-#             return node
+            return node
 
-#         flattenBT(root)
+        flattenBT(root)
 
 """
 off-line preorder transformation with extra space
