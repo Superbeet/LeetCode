@@ -5,7 +5,7 @@ Given a Binary Tree (Bt), convert it to a Doubly Linked List(DLL). The left and 
                                           /    \
                                         6       14
                                       /  \     /　 \
-                                   4     8  12   16
+                                   4     8  12      16
                                    
 This is the recursive approach. Note that, here root will point to some inbetween element of the list formed. So,just traverse from root backwards to get the head.
 

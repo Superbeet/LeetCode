@@ -1,3 +1,35 @@
+'''
+Simplified Solution
+'''
+class Solution:
+    """
+    @param x: An integer
+    @return: The sqrt of x
+    """
+    def sqrt(self, x):
+        # write your code here
+        if x < 0:
+            return
+        
+        left, right = 0, x
+        mid = 0
+        while left + 1 < right:
+            mid = (left + right)/2
+            if mid*mid == x:
+                right = mid
+            elif mid*mid < x:
+                left = mid
+            else:
+                right = mid
+            
+        if right*right <= x:
+            return right
+        else:
+            return left
+            
+'''
+Refined Solution
+'''
 class Solution(object):
     def mySqrt(self, x):
         """

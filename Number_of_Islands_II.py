@@ -6,6 +6,63 @@
 m 0 0 0 0
 """
 
+class Solution:
+    # @param {int} n an integer
+    # @param {int} m an integer
+    # @param {Pint[]} operators an array of point
+    # @return {int[]} an integer array
+    def numIslands2(self, n, m, operators):
+        # Write your code here
+        
+        size = n*m
+        self.ids = [-1 for i in range(size)]
+        self.count = 0
+        result = []
+        dirs = [(0,1), (0,-1), (1,0), (-1,0)]
+        
+        for opt in operators:
+            x, y = opt.x, opt.y
+            if self.inbound(n, m, x, y):
+                index = y*n + x
+                if self.add(index):
+                    for dx, dy in dirs:
+                        nx = x + dx
+                        ny = y + dy
+                        adj_index = ny*n + nx
+                        if self.inbound(n, m, nx, ny) and self.ids[adj_index] != -1:
+                            self.union(index, adj_index)
+            result.append(self.count)
+        
+        return result
+    
+    def inbound(self, n, m, x, y):
+        if x < 0 or x >= n or y >= m or y < 0:
+            return False
+        return True
+    
+    def add(self, m):
+        if self.ids[m] == -1:
+            self.ids[m] = m
+            self.count += 1
+            return True
+        else:
+            return False
+    
+    def find(self, m):
+        while self.ids[m] != m:
+            # self.ids[m] = self.ids[self.ids[m]]
+            m = self.ids[m]
+        return m
+        
+    def union(self, m, n):
+        i = self.find(m)
+        j = self.find(n)
+        
+        if i != j:
+            self.ids[i] = j
+            self.count -= 1    
+
+
 class UnionFind(object):
     def __init__(self, size):
         self.size = size
@@ -85,8 +142,7 @@ class Solution(object):
                     ny = y + dy
                     adj_index = ny*n+nx
 
-                    if 0<=nx<n and 0<=ny<m and 
-                      union_find.set_id(adj_index)!=-1:
+                    if 0<=nx<n and 0<=ny<m and union_find.set_id(adj_index)!=-1:
                         root = union_find.union(index, adj_index)
 
             res.append(union_find.count())

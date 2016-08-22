@@ -1,0 +1,303 @@
+Amazon 面经
+
+Design a hashtable
+
+System Design
+公司员工系统
+Design for an organizatin employee data model
+
+电梯：
+楼主没做过这题，虽然听说过。并没有标准答案。这里提供几个可以思考的点：
+有些电梯出于安全考虑，应该限定特定的人可以去特定的楼层
+有些电梯可以有更大的门，甚至是前后的双门
+如果一栋楼里电梯非常多，怎样让效率提高
+电梯的调度设计算法，有request的时候让哪个电梯去接人
+
+TinyURL：
+比较侧重系统设计，不是算法。
+先算法大概讲了一下，然后：
+如果你设计了一套TinyURL，要考虑上线，怎样去预计你的成本？需要多大的存储空间？未来的成本增长如何去预计？
+一些关于分布式存储的问题，怎样进行优化，caching，remapping（以前有相关工作经验）
+
+Server performance metrics - Requests per Second (RPS), Error Rates, Latency: Average Response Times (ART) & Peak Response Times (PRT), Uptime, CPU utilization, Memory utilization
+
+------
+
+OA: Valid Parenthesis
+
+##ONSITE:
+如何判断一个无向图是树。挺简单的，BFS搞定或者union-find也行，问了下如果用DFS怎么做，BFS写了，DFS没有写代码就说了下思路没时间了。
+http://www.cnblogs.com/grandyang/p/5257919.html
+
+然后一个题是t-nary tree求所有节点的数目和。
+第二个题是给一个函数返回某个节点在树中的根节点，然后呢这个函数有bug，比如root的right branch是断的，但是还是返回了root节点。然后给出了一个set<TreeNode> 是树里面所有的节点。如何找出并fix这个bug。
+
+设计一个消息队列, 可以做logging啊，发布订阅系统呀，怎么设计，然后我各种和他确认，比如系统多少人用啊，他什么都不说， 其实基本模型很简单就是个生产消费，然后问了下sql存message的话具体schema是什么样的，存不下怎么办，然后缓存啊，sharding啊，多线程也问了下，就是你提到的每个点他都会问，我当时嘴欠提了kafka，然后说kafka的原理他也要问，那东西10来分钟哪说得清，想起啥说啥也是。反正这轮感觉答得一般，因为是第一次面系统设计，感觉不是太轻车熟路。
+
+最后一轮烙印男，上来介绍完就直接上题了，design uber，我开始以为是uber的系统设计，卧槽心想上一轮刚面完系统设计又面，后来他说是design class, methods什么的才知道是oo design设计uber，设计rider通过发送request给uber找到driver，然后不同的uber type:uber x, uber xl啥的计算车费,然后车也不一样。反正这题我在常见的oodesign题里面也没见过，就需要各种交流讨论，oo design不是很擅长，太灵活每个人关注点不一样，这轮反正也是各种讨论，为什么这么设计，他当然也给了提示什么的。
+
+
+2 sum， followup 是K sum
+
+情景是，一些用户在网站上subscribe了一些东西，会定时定量自动送到顾客那里。每个request有一个ID，一个start date，一个end date，一个quantity，并且一个demand有且仅有一种商品。
+同样的，网站也有供应商，供应商也定时定量地向网站提供商品。一个ID，一个start date，一个end date，一个quantity，并且一个supply有且仅有一种商品。
+写一个函数，输入是一堆supply，和一堆demand，把demand尽量多地fulfill，把匹配出来的supply和demand的ID成对返回。. 
+
+注意几点：
+尽可能多地满足demand。
+越早的demand越需要fulfill。
+一个demand可以由多个supply满足，同样的，一个supply可以拆开来满足多个demand。
+函数signature需要自己写。
+----
+Demand supply匹配基本上就是sort + greedy，没什么fancy算法。思路上有点像LC上的meeting room吧。
+
+电梯就是基本电梯和附带其他功能的电梯，所以是一个继承关系。至于有了一个request后怎么去选电梯，先找当前楼层的空闲电梯，没有的话找最近的同方向电梯。往上的就找楼下最近的也往上的电梯。我用的C++，电梯放map里，按照楼层排序。速度上来讲面试官也认为已经足够快了。
+
+Tiny URL这个网上资料很多的
+http://www.hiredintech.com/system-design-process/ 看一下这个链接里的视频差不多足够了
+BST相同这个很简单不讲了
+
+通讯录这个，一开始只是手机上的正常通讯录，我说用hash table。后来面试官说要考虑浏览通讯录，我说那就用BST，因为是排序过的可以按照字典顺序列出来，同时查找也非常快。后来面试官说如果通讯录是大group级别的，比如新员工加入amazon要得到一个巨大的通讯录，手机存不下。那我就说变成一种cloud service，将要浏览到的人由服务器下放名字，找电话号码把ID发给服务器，服务器进行hash。中间我还提了一个类似双重hash的吧，我不是CS专业的，不知道这个叫什么名字，面试官明白我说的意思就问我这个概念叫啥，我说我不知道。。。。。本人system design毫无准备，昨天才开始看，基本都是瞎扯。这里可能有误导，见谅。
+----
+设计题：
+电梯：
+楼主没做过这题，虽然听说过。并没有标准答案。这里提供几个可以思考的点：
+有些电梯出于安全考虑，应该限定特定的人可以去特定的楼层
+有些电梯可以有更大的门，甚至是前后的双门
+如果一栋楼里电梯非常多，怎样让效率提高
+电梯的调度设计算法，有request的时候让哪个电梯去接人
+
+TinyURL：
+比较侧重系统设计，不是算法。
+先算法大概讲了一下，然后：
+如果你设计了一套TinyURL，要考虑上线，怎样去预计你的成本？需要多大的存储空间？未来的成本增长如何去预计？
+一些关于分布式存储的问题，怎样进行优化，caching，remapping（以前有相关工作经验）
+
+Extra Phone:
+判断两个二叉树是否相同
+设计题，设计电话本，如果一次性要支持很大量的通讯录，手机存不下，要怎么设计（设备端和服务端都要讲)
+
+Phone
+两个题目：
+1. Remove the consecutive duplicate characters from a string（acbbc => a）
+2. Design for an organizatin employee data model，支持find an employ‘s manager，find all the reportees give one manager id。 第一题写了两遍才做出来，第二个design 那个没写code 各种聊 权衡利弊。想想何时用graph，何时tree， 何时just hashmap。我自己当时其实想的也不是很清楚，现在也不是很确定。不过意外的给了##ONSITE。 可能coding之前聊工作经历聊得很high，三哥很懂 我俩一直在聊UI的design pattern，indendency injection，composition vs inheritence，code coverage， code reusability。终于遇到一次不用考刷题过的了。。。
+
+Phone
+判断数组中是否存在与所给单词缩写相同的单词，参考leetcode288 Unique Word Abbreviation
+两数组中的共同元素 Hashtable OR sort & two pointers
+
+Phone 
+Hash table design and implementation
+
+##ONSITE - Amazon
+jumpgame。不一样的是，每一步步长最多是3，要求输出最短路径的index。问都有什么solution，我先想到的是dp（dp =1+min(dp[i-1], dp[i-2], dp[i-3])，然后他问还有什么solution。经他提醒，貌似可以用三叉树，每一个node存index，每一分支代表步长。然后用BFS找到最多路经。他说这样可以，让我选一个方式，我当然选dp了。
+
+System design. 1 billionrequest, 1 million servers. Request分为多种type, 有些type是heavy duty，like playing movie，有些是简单的，如何设计可以保证loadbalance。如果有一些server一直没有heavyduty，如果能让这些server保证得到heavyduty。如果有些serverdown了，怎么办？还有如果server。
+还有一个问题是，多级domain，每一级都存key-value，输入（rootdomain, int key）要求找到最低一级domain的value。每一级都可能有key，但是value不一样。这样用什么结构存比较好，我说用tree型结构，
+
+implement trie
+
+LC phone number combination那道题的变种，因为还有一个dictionary，只返回在dictionary里的words，这个条件没有听清，直接写了DFS+backtracking。然后问我如何剔除不在dictionary里的combination，我说可以用trie或者hashset，讲了一下tradeoff。如果用hashset的话，其实timecomplexity没有变化O(2^N).
+最后明白了，如果用trie+BFS的话，比较好，因为不在trie的brach就不用走下去了.我就大概写了BFS主要的部分，就没有时间了.
+
+Phone - AWS low level
+问了一下 一些system design的概念， 什么 server performance metrics, project 有没有有用到 load balance 的算法。
+
+1. permutatio II 考虑重复情况
+2. combination
+3. Find Median from Data Stream
+都问了复杂度
+
+
+Phone
+烙印面试官忘记要面试了，迟到15分钟，只做了一个题。给一个整型数组，相邻数字的值最多差1，再给一个target，return target index。楼主一开始在想改版二分法，把这个题目跟search in a almost sorted array那个题搞混淆了，我把改版二分法说给面试官说，烙印面试官说right，然后我就天真的写成search in a almost sorted array那个题了。之后run test case才发现自己是错的，烙印面试官说right就是要我掉陷阱。最后给出了一个O(n)的解法，非常无聊的一个题。
+for(int i = 0; i < A.length;)
+{
+	if(A[i] == target){
+		return i;
+	}
+	else{
+		i = i + Math.abs(target - A[i]);
+	}
+} 
+return -1;
+
+Phone
+1. implement pow(base, n) 要求写出足够的test cases
+2. Unique Path II brute force + DP
+
+Phone
+给个 B Tree 要 in order 遍历，然后输出double linked list.
+
+Phone
+296 best meeting point leetcode 317
+好多朋友住在New York City的不同地方 (x,y). 要找一个地方去聚会， 要求离所有人都最近
+1. 距离是曼哈顿距离.
+2. 选择的地方 必须是其中一个人住的地方
+3. followup，如果选择的地方 可以是城里任何地方。
+
+接着是一些简单的基础：array 和 link list的比较，如何实现哈希表，
+
+##ONSITE
+Leetcode 114 原题
+不完全，输出它中序遍历转链表。.
+其实就是中序遍历不输出，而是转成链表，我用的recursive的办法，他拿去算了半天，大概觉得没问题了，问我，如果不用recursive呢？ 我想了半天，我说我没试过，刚想让他给个提示，他说那就下一题把。
+
+一个在线code，语言任意，就是给一个NxN的矩阵，单数圈顺时针走一格，双数圈逆时针走一格：. 鐗涗汉浜戦泦,涓€浜╀笁鍒嗗湴
+输入:                   输出：
+1 2 3 4 5            6 1 2 3  4 
+6 7 8 9 0            a 8 9 d  5
+a b c d e             g 7 c  j  0
+g h i   j k             l  b h i   e
+l  m n o p           m n o p k
+
+如果我们要做一个“最受欢迎的10个产品” 说下你的思路。-google 1point3acres
+我首先问了一些前提，然后说第一次建立的时候，做个容积为10的最小堆，不断比较下一个商品销量和顶端商品销量就ok.
+然后他问了下如果不用extra space呢，我说 那就快排吧，问了下快排的big-O
+写了下快排的算法，这里有一点就是，这个题目不需要全部快拍结束，只要前10个商品，我在快排的基础上，加了一个index，完成题目，他最后说了句“没有问题”
+
+##ONSITE
+然后就是behavior，差不多的问题。接着上算法，给一个2d array，和两个点的x，y，求以这两个点为左上到右下的对角线的方块区域内所有elements的su。
+然后优化，给思路，想出的是hashmap存处理过的值和对角线坐标，得到肯定，然后讨论其他solution，提示之后得到数组预处理，每个element存以0,0为起点到本点的区域的sum，要求写完整code。然后问求中间一个方块怎么求， 时间不够没要求写code。
+
+设计一个飞机场的locker系统，大致等于停车场，不过在说到总的system部分储存所有locker的数据结构的时候，讨论了不久，关于怎么存，怎么找，怎么快速得到状态。
+然后详细问了我设计的一个dispatcher class， 问算法，要求写出详细的code，完整code，包括声明开始。
+
+然后开始问process和thread的定义概念...我答了一下，然后就开始多线程的骚扰，可能4,5个问题之后实在招架不住（多线程一直是弱项，而且也没想到考的那么概念性，全是定义式的题目），表示我对多线程的理解程度不深。然后结束多线程，正在醒脑准备算法，然后他画了一个amazon的browser商品购买页面，说我们这有一个button是add to cart， 如果没有库存了就会变灰，你来设计整个构架。询问需要设计到什么程度，比如只是browser前端到后端，在db center之前终止，还是需要包括db center实现完整的逻辑，还是把最后面的warehouse的physical的东西也要包含，答曰：全部...心里一万个草泥马，然后大概画了一个构架，db center当然要分布式，然后warehouse前到db中间设计一个moniter监视产品变化，问有什么缺陷，我说当然客户这边点购买，但是warehouse已经sold out但是还没更新，肯定就不一致了，然后怎么优化，两端加预处理，保留一段状态hold住，blabla一顿说，sharding啊，redundance啊
+
+设计一个交通灯系统吧.
+
+Phone
+x decode: (word break 变种 好题！)
+A-1
+B-2
+C-3
+...
+Z-26
+Given an interger (for example 2634157819), return all its possible original String . 
+List<String> decode(int n)
+
+##ONSITE
+1. LC 93 没刷过这题，写了几行面试官就说有bug，没有给自己查bug的机会，应该是要黑
+
+2. LC 33 临时忘记了，现场分析，算法没问题，但是代码最后还是有bug，没改出来
+
+3. 设计停车场(面项兑象社稷)，栏杆提高者，基本上是看交流能力
+
+4. 树，寻找路径和为X的路径，给定出发点，顺序只会向下，不会向上
+
+Amazon领导力原则
+
+##ONSITE
+每一个product有两个属性：user，relevancy ，你可以通过调用系统API得到这两个值。 每一个section有score所有的product的score之和，每一个product的score是user * relevancy 。 最后给这个list of section排序，使得score大的section在前面。 这个题目其实很简单，但是他前面描述这个问题花了很多时间。
+
+设计一个 in memory cache system，支持.鐣欏璁哄潧-涓€浜�-涓夊垎鍦�
+1. capacity（这个system有一定的容量）
+2. TTL（time to live）
+3. LRU (least recently unused)
+参考leetcode https://leetcode.com/problems/lru-cache/
+follow ups:让你扩展到一个distributed in memory cache system怎么设计
+
+Surrounded Regions leetcode的原题https://leetcode.com/problems/surrounded-regions
+
+Clone linkedlist with random pointers。leetcode原题。我用hashMap做出来的。
+
+设计一个大楼的电梯（Amazon经典面试题目，面试前面我专门总结了一下^_^）
+
+回答问题时最好要以customer为中心。
+
+##ONSITE AWS
+一个非常健谈的三哥，aws组的，先问了简历，非常详细的问了我最近做的项目。然后开始算法，先是说了一堆关于dns查找的堆背景知识，然后上题，给一堆 ip地址，让你选择数据结构如何去存，然后实现一些方法，比如remove prefix为xxx.xx的所有ip之类的。主要考的是数据结构。楼主刚开始用hashmap存，发现太麻烦还有冗余，三哥不是很满意，于是改用trie的存。
+
+一个白人geek， aws组的，问完简历问了一堆behavior问题，但是没有准备好，就随便说说了。然后让我设计 s3, exo me?? system design啊？好吧还好之前准备过一点，就各种胡吹，load balancer啊，message queue啊，no sql啊之类的。然后他让我讲data base的部分，又是一堆扯淡.
+
+判断tree是不是mirror tree，假装思考了一会，很快就写完了，但是由于紧张写了一个bug，改了两次才改完。。
+接着问了家具检测的ood题目
+
+问了一个ood的题目，加上算法，让我存一个表结构，员工表，每个员工都有reporter，问我该如何存，刚开始想用树存，和三哥一起分析讨论后发现查找的效率太低，于是又改用hashmap，employee存成一个类。
+然后写算法，第一个是add，比较简单，直接插入hashmap，但是由于轻视了面试，我只写了大致的logic，没有做corner case的check，被三哥揪了小辫子。然后写输出所有的直接report to this employee的人的list，由于我把emoloyee存成了一个类，所以比较简单，直接读取。 第三题是写所有report to him的人，用了bfs。然后一大堆follow up，比如如何存员工照片什么的。
+
+检测家具的质量，是否可燃
+
+##ONSITE
+
+第一轮：
+给定一个string。比如说是“hello”。 判断输入的string是不是他的substring。输入“ell” 返回true，输入“eo”返回false。（我面完这题觉得很简单，但后来同学告诉我，这题要用kmp算法做）
+写完之后，问如果“oh”和“ohel”这种也算是原string的substring，应该怎么办。（把两个元数组相加，其他代码不变）
+OO design：要给一个家具工厂的所有家具做质量测试（压力测试，是否易燃等等）
+
+第二轮：
+输入是一个城市的地图的大小（m，n），和一个list，里面包含所有有locker的地理位置。输出一个m*n的二位数组，每个单元的值为到最近locker的距离。问时间复杂度（这题要从每个locker同时开始bfs）
+
+第三轮：给一个图片，有着亮的点和黑的点，判断一共有多少个黑暗的块儿。时间复杂度。（这题我觉得相当于找出一个图中有多少个联通分量，我用bfs做的，用一个二维数组记录每个点是否被访问过）
+
+第四轮：
+问linkedlist怎么回事，hashmap怎么回事
+给一个二维数组，都是整数，每行都是从小到大排列，每列也是从小到大。（但是第二行的第一个不一定大于第一行最后一个），给一个target，判断是否存在于这个矩阵中。先用mlgn，再用lgn做。（lgn的方法就是对整个二维数组做binary search，然后每次可以把问题缩减为原来的3/4）
+
+Phone Amazon Prime
+1. find maximum in a rotate array.
+
+2. 给一个Purchase class,每个purchase有一个itemid和一个数量，返回所有数量大于5的商品名称。. 
+Purchase {
+    String itemId;
+    int quantity;
+}
+
+public List<String> find(List<Purchase> list) {
+}
+考map-reduce语法
+
+3.design。1） 已知有如下的objects和两种method，如何design class。2）如果design好了class，要追加PlasticMattress和PlasticTable两个新物品的话，class要怎么处理。答得不太好，哪位帮忙设计一下？
+//applyFire 估计就是木头的能点着，铁的不能。applyWeight的意思是，如果在桌子中心用力，桌子不会倒，在桌子边缘用力，桌子会倒。具体题意我也不是非常理解。
+WoodChair
+WoodTable
+SteelChair
+SteelTable
+
+boolean applyFire(int time, int intensity)
+boolean applyWeight(int x, int y, int weight)
+https://gist.github.com/gxh1991/10f9fee32a99b6df9235dc54210da3f9
+
+http://dongweiming.github.io/python-bridge.html
+Bridge Pattern and Simple Factory Pattern/Facotry Method Pattern
+https://www.careercup.com/question?id=5183557542608896
+http://xgu20.people.uic.edu/tag/%E9%9D%A2%E7%BB%8F/
+http://design-patterns.readthedocs.io/zh_CN/latest/creational_patterns/simple_factory.html
+
+##ONSITE
+第一轮：类似word searchII。 但是用个故事包装~什么小朋友找动物相较原题，更改是找的单词的字母必须在一条直线上，不能拐弯。
+第二轮：建立销售亚马逊设备的网站。我给回答成了系统设计。。。最后问面试官，他说是其实想考我算法~但是人比较好就放过我了~
+第三轮：亚马逊仓库的设计。记得别人面经里有。
+第四轮：LRU cache
+第五轮：设计类似facebook的好友通讯录，和查找附近的人功能
+第六轮：binary search tree iterator + test cases.
+
+##ONSITE
+然后题目是类似web crawling, 给一个url,获取这个网页中包含的url的所有网页的信息，大概就是一个搜索的问题，面试官会提供一些接口，LZ用了BFS写的。
+
+实现一个class logFile, 里面有insert 和lookup 方法, 保存的是当前一小时内的所有log...自己选择数据结构，说下complexity。最后问了下log 太多，内存放不下怎么办。
+
+然后是给个点求距离它的KclosestPoints...用了priority_queue，最后说下复杂度就行了.
+
+题目是LC product except itself, 这题他并没有要求不允许用除法，LZ 开始用的LC上面的方法，结果被问为啥要用前后product 数组，我也很懵逼，最后用了product / arr, 求解的，还有一些corner case 要考虑到。。。
+
+##ONSITE
+第一轮:
+1a.给两个use_id的file，找出repeat user，即同时出现在file1和file2的user. visit 1point3acres.com for more.
+1b.对于repeat user，找出它们的访问次数交集的最大值。. From 1point 3acres bbs
+2.给一个array，找出balance point，即该点左边sum和右边sum的差值最小。O（n）
+
+第二轮:
+给一个数组，找最长增长区间。
+1，4，2，6.   length[0]=1,length[1]=2,length[2]=1, length[3]=4, max=length[3]=4. 区间内的数不用连续增长，其实是对每一个位置，向前找到不大于该位置的最长序列，然后求最大值。
+用stack做，类似leetcode84。O（n）
+
+第三轮:
+1.rat in a maze
+2.two sum. 写test case
+
+第四轮:
+有一个音乐视频电子书的分享平台，设计用户的搜索功能
+
+Design an order processing and delivery system，允许vip之类的用户插队

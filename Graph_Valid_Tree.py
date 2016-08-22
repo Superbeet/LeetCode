@@ -1,3 +1,54 @@
+"""
+BFS
+"""
+class Solution(object):
+    def validTree(self, n, edges):
+        """
+        :type n: int
+        :type edges: List[List[int]]
+        :rtype: bool
+        """
+        if n <= 1:
+            return True
+        
+        if not edges:
+            return False
+                
+        self.graph = {}
+        for node, neigh in edges:
+            if node not in self.graph:
+                self.graph[node] = set([neigh])
+            else:
+                self.graph[node].add(neigh)
+            
+            if neigh not in self.graph:
+                self.graph[neigh] = set([node])
+            else:
+                self.graph[neigh].add(node)
+        # BFS check if there is a cycle
+        import collections
+        queue = collections.deque([])
+        start_node = edges[0][0]
+        queue.append(start_node)
+        visited = set([start_node])    
+        while queue:
+            node = queue.popleft()
+            for neigh in self.graph[node]:
+                if neigh in visited:
+                    return False
+                visited.add(neigh)
+                queue.append(neigh)
+                #remove node from its neighbour's adjacent list
+                self.graph[neigh].remove(node) 
+        # Check if the whole graph is connected
+        if len(visited) != n:
+            return False
+        
+        return True
+
+"""
+Union-find set
+"""
 class Solution(object):
     def validTree(self, n, edges):
         """

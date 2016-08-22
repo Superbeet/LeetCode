@@ -70,7 +70,7 @@ class Solution(object):
 				del hashmap[last_pos_char]
 				start = min_last_pos+1
 
-			hashmap[c] = i
+			# hashmap[c] = i
 			max_len = max(max_len, i-start+1)
 
 		return max_len

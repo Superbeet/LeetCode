@@ -57,32 +57,31 @@ class Solution1(object):
 #O(nlog(n))
 class Solution(object):
     def lengthOfLIS(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
         if not nums:
             return 0
-        size = len(nums)
         
-        dp = [nums[0]]
+        queue = []
+        queue.append(nums[0])
         
-        for i in xrange(1, size):
-            if nums[i]>dp[-1]:
-                dp.append(nums[i])
+        for i in xrange(1, len(nums)):
+            
+            if nums[i] > queue[-1]:
+                queue.append(nums[i])
             else:
-                start, end = 0, len(dp)-1
-                # print dp
-                while start<=end:
-                    mid = (start+end)/2
-                    # print mid
-                    if dp[mid]<nums[i]:
-                        start = mid+1
+                left, right = 0, len(queue)-1
+                while left + 1 < right:
+                    mid = left + (right - left) / 2
+                    if queue[mid] < nums[i]:
+                        left = mid
                     else:
-                        end = mid-1
-                dp[start] = nums[i]
-        
-        return len(dp)
+                        right = mid
+                
+                if queue[left] > nums[i]:
+                    queue[left] = nums[i]
+                elif queue[right] > nums[i]:
+                    queue[right] = nums[i]
+                    
+        return len(queue)
 
 sol = Solution1()
 # print sol.lengthOfLIS([10, 9, 2, 5, 3, 7, 101, 18])

@@ -1,3 +1,42 @@
+# 2nd Time
+class Solution(object):
+    def letterCombinations(self, digits):
+        """
+        :type digits: str
+        :rtype: List[str]
+        """
+        if not digits:
+            return []
+            
+        key_map = {
+            1:[],
+            2:["a","b","c"],
+            3:["d","e","f"],
+            4:["g","h","i"],
+            5:["j","k","l"],
+            6:["m","n","o"],
+            7:["p","q","r","s"],
+            8:["t","u","v"],
+            9:["w","x","y","z"],
+            0:[]
+        }
+        
+        result = []
+        self.get_combination(key_map, digits, 0, [], result)
+        return result
+        
+    def get_combination(self, key_map, digits, start, ans, result):
+        if start == len(digits):
+            result.append("".join(ans))
+            return
+
+        num = int(digits[start])
+        for letter in key_map[num]:
+            ans.append(letter)
+            self.get_combination(key_map, digits, start+1, ans, result)
+            ans.pop()
+        
+# 1st Time
 class Solution(object):
     def letterCombinations(self, digits):
         """
@@ -42,6 +81,8 @@ class Solution(object):
             cur_str = cur_str[0:-1]
 
         return
+
+
 
 sol = Solution()
 print sol.letterCombinations("9")
