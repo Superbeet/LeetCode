@@ -1,5 +1,86 @@
+"""
+二刷 TTL LRU
+Time: Lookup O(1), Insert (1), Delte (1)
+
+LRU cache with TTL
+
+For each node add an additional field "expiry", which is the creation time + ttl
+On lookup check if the node has expired by comparing current_time with expiry
+If it has expired delete the node and return not_found
+If its has not expired, then return the value found.
+
+"""
+import time
+
+class Node(object):
+    def __init__(self, key, value, expiry):
+        self.key = key
+        self.value = value
+        self.prev = None
+        self.next = None
+        # TTL
+        self.expiry = None
+
+class LRUCache(object):
+
+    def __init__(self, capacity):
+        """
+        :type capacity: int
+        """
+        self.size = capacity
+        self.tail = Node(-1,-1)
+        self.head = Node(-1,-1)
+        self.head.next = self.tail
+        self.tail.prev = self.head
+        self.hashtable = {} # key:node
+        
+    def __move_to_tail(self, cur_node):
+        cur_node.next = self.tail
+        self.tail.prev.next = cur_node
+        cur_node.prev = self.tail.prev
+        self.tail.prev = cur_node
+        
+    def get(self, key):
+        """
+        :rtype: int
+        """
+        if key not in self.hashtable:
+            return -1
+        
+        cur_node = self.hashtable[key]
+        cur_node.prev.next = cur_node.next
+        cur_node.next.prev = cur_node.prev
+        # TTL
+        if cur_node.expiry <= time.time():
+        	return -1
+
+        self.__move_to_tail(cur_node)
+        return cur_node.value
+
+    def set(self, key, value, expiry): # TTL
+        """
+        :type key: int
+        :type value: int
+        :rtype: nothing
+        """
+        if key in self.hashtable:
+            node = self.hashtable[key]
+            node.prev.next = node.next
+            node.next.prev = node.prev
+            
+        elif len(self.hashtable) == self.size:
+            del self.hashtable[self.head.next.key]
+            self.head.next = self.head.next.next
+            self.head.next.prev = self.head
+        
+        new_node = Node(key, value, expiry) # TTL
+        self.hashtable[key] = new_node
+        self.__move_to_tail(new_node)
 
 
+
+
+# 一刷
 class Node(object):
 	def __init__(self, key=None, value=None):
 		self.prev = None
@@ -38,17 +119,17 @@ class LinkedList(object):
 	def remove_tail(self):
 		self.remove(self.tail)
 	
-	def add_tail(self, node):
+	# def add_tail(self, node):
 		
-		if not self.tail:
-			self.head = node
-			self.tail = node
+	# 	if not self.tail:
+	# 		self.head = node
+	# 		self.tail = node
 		
-		else:
-			node.next = None
-			node.prev = self.tail
-			self.tail.next = node
-			self.tail = node
+	# 	else:
+	# 		node.next = None
+	# 		node.prev = self.tail
+	# 		self.tail.next = node
+	# 		self.tail = node
 	
 	def add_head(self, node):
 		

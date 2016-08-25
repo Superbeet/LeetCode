@@ -191,7 +191,7 @@ Amazon领导力原则
 ##ONSITE
 每一个product有两个属性：user，relevancy ，你可以通过调用系统API得到这两个值。 每一个section有score所有的product的score之和，每一个product的score是user * relevancy 。 最后给这个list of section排序，使得score大的section在前面。 这个题目其实很简单，但是他前面描述这个问题花了很多时间。
 
-设计一个 in memory cache system，支持.鐣欏璁哄潧-涓€浜�-涓夊垎鍦�
+设计一个 in memory cache system
 1. capacity（这个system有一定的容量）
 2. TTL（time to live）
 3. LRU (least recently unused)
@@ -284,8 +284,8 @@ http://design-patterns.readthedocs.io/zh_CN/latest/creational_patterns/simple_fa
 
 ##ONSITE
 第一轮:
-1a.给两个use_id的file，找出repeat user，即同时出现在file1和file2的user. visit 1point3acres.com for more.
-1b.对于repeat user，找出它们的访问次数交集的最大值。. From 1point 3acres bbs
+1a.给两个use_id的file，找出repeat user，即同时出现在file1和file2的user
+1b.对于repeat user，找出它们的访问次数交集的最大值
 2.给一个array，找出balance point，即该点左边sum和右边sum的差值最小。O（n）
 
 第二轮:

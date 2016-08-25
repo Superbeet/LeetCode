@@ -1,0 +1,136 @@
+1. 在一个整数数组中（无重复元素）找出一个元素，使得其大于所有他前面的数，并且小于所有他后面的数，返回其下标。例如[4,1,2,6,10,7]中，6满足条件，返回下标3。若有多个满足条件，返回一个即可。若无，返回-1
+2. 在一个整数数组中（有重复元素）找出有多少对，满足条件：他们的差等于k。例如[1,5,5,2,4,6,7]，k=3，满足条件的对子有[1,4], [2,5], [2,5]（注意有两个5）,[4,7]，所以程序返回4。这题比较tricky的地方在于k=0的情况需要另外考虑一下。. 鐣欏鐢宠璁哄潧-涓€浜╀笁鍒嗗湴
+3. Number of islands的延伸。给一个二维矩阵：
+// 1 2 1               
+// 1 0 2               . 涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+// 0 2 2  
+
+里面各种整数，相邻两数若相同则认为是同一块island，所以上例中共有6个islands；两个islands是“相邻”的，如果他们有一个“相邻点”，例如上例中，左上角的“1 1”和左下角的“0”这俩岛屿是相邻的，中间的“0”和右下角的三个“2”也是相邻的岛屿，而中间的“0”和左下角的“0”是不相邻的岛屿。
+要求自行设计数据结构，表达出这种adjacent islands graph，其中的节点是island，有边则代表两个island相邻
+4. culture，聊的很细。面试官确确实实是想知道我跟他们家culture合不合，跟我说他们家很agile，面对一个大项目，不会计划个三四个月去做，而是想办法把需求简化到minimum，然后顶多3-4周的时间做出来，然后在此基础上根据用户反馈加附加值。
+
+第一轮两道题：1. given an array of integers, check if we can partition the array into two subarrays so that the sums of those two arrays are equal. 我说先算出原来array的一半sum是多少，然后用make change with coins的方法解决。2.把一个array中的odd elements全都搬到左边，even elements全都搬到右边。我说用两个pointer，一个为0， 一个为len(arr)-1，然后traverse array并根据情况swap两个pointer所指向的element。他对我的代码还都算满意。然后讨论unit test，让我手写test cases, 用眼睛看结果对不对。。。。
+第二轮：设计一个在线的下tic tac toe游戏，主要讨论了API的设计和游戏数据结构以及客户端的设计。我跟他扯了不少authorization, AWS Lambda, REDIS之类的东西，感觉他很高兴。最后面了有大概1小时10分钟。
+第三轮：面试官很屌，只开语音不肯开视频。trapped water问题，我假装没做过，想了10分钟“默写”出了代码，不过然后让我用O（1）的space。我没想出来，让他提醒了。感觉他非常非常非常不耐烦，不停的下线上线，打哈欠（肯定是故意的，声音巨大）， 后面问他问题也只用yes, no回答。。。。。瞬间对zenefits印象巨差！！！你小子这么arrogant，你老板教你的嘛！！！！！！！
+
+第四轮是manager：简单聊了我的工作和他们office的工作（我申请的Vancouver的office）。他反复强调“you cannot imagine the chaos here...."，这尼玛是劝退的节奏啊。。。。我是做视频的，他就问我一般的video streaming系统怎么搭建，CDN和缓冲等等问题，视频在线播放多了带宽不够怎么办。感觉就是纯粹闲聊。。。。。聊了一个小时多一点。。。。他还挺高兴的，不过直到最后都在暗示他不想招人。。。。。。（或许更准确说是不想招我。。。）
+
+
+电面是个美国小哥：
+    1. leetcode原题，trapping rain water，没有任何变形和followup，想几个test case run一遍就行了
+    2. 一道设计题，假设客户和QA engineer之间不能直接交流，需要一个程序来将客户的需求相应forward到工程师那边，然后同样把比较技术性的回复转换成客户能理解的东西，如何设计中间程序，需要什么数据结构，要记录哪些东西，数据库怎么设计。 这题比较开放，瞎扯就行了
+
+Onsite:
+1. 一个印度人和一个中国妹子，先聊简历，以下每一轮都是，而且聊蛮久，细节问的挺多。 第一题将数组中的奇偶数据分别split到两边，two pointer就可以了。 第二题找到一个array的subarray，使subarray得sum=总sum的一半，我先用的backtracking和剪枝做的，问了下时间复杂度，然后时间不够了，dp的方法没想完全， 烙印提示用背包算法来做。
+2. 波多黎各小哥，leetcode原题group anagram, 问了时间复杂度，然后我是用sort+hashmap做的，followup问如果不用sort的话怎么做，对应的复杂度是多少。由于前面简历问的太久，而且最后要留时间问问题，所以就做了一道题。 
+3. 烙印，表示赞同不是点头而是不停摇头，和吃了摇头丸似的，不过还是挺nice得， 第一题是一个带权重的数组，根据权重随机去抽数组元素。第二题longest increasing path in a matrix， 不过此处相邻元素只能增1. 我先做了bfs search的方法，然后加了cache来优化。 问了复杂度。
+4. VP manager， 问了简历，还有乱七八糟的聊，没有设计题，不过问了一些对市面上app的想法之类的。 
+
+1. 三哥
+1）
+一个input list
+num = { 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1 };
+flip 一个连续的区间使1的数量最大
+
+2）
+输入
+5 2
+6 3  5 7 1
+第一行第一个数是输入的个数，第二个数是diff. more info on 1point3acres.com
+找第二行所有数字差为2的pair 的个数
+这个例子就是
+{1,3} {5,7} {3,5}
+输出3
+
+先排序，然后两个指针构建一个窗口，滑动窗口，他们好像特别喜欢考滑动窗口的题
+面完这个了三哥看还有时间，说你写个sort的算法吧
+
+2. 三哥
+1）. num to excel column
+就LC上面那道题
+2）. 两个N长度的排好序的数组，没有重复，找第N个元素. Waral 鍗氬鏈夋洿澶氭枃绔�,
+3. manager
+
+这三轮skype之前有一个skype是个国人小哥，上来看上去挺凶的，其实人特别好，就问了我permutation和two sum 让我过了~给赞！
+
+Phone
+Coding的题, 给你一个矩阵, 每个cell有个>=0的int, 还有一个int k, 是你兜里的钱. 你要从矩阵左上角走到右下角, 一次只能往右走一格或往下走一格, 你每新进一格, 就要花掉那个格子里那么多的钱(买路费喽~), 问有没有足够的钱到达右下角并且要求兜里最少(不是最多!)剩的钱数. 
+
+
+Onsite:
+第一轮, 一个非常友好的印度小哥, 一来就自我介绍了一番, 他六个月前从亚麻跳槽来的. 先和我聊了聊我本科时的一个project和paper, 问得挺细的. 
+给我的题: 给一个int array A, 求index k, k左边的数都比A[k]小,右边的都比A[k]大, 就是本科CS101的基本习题喽, 我就直接写了, 说了下时间空间. 
+又给了道题: 给一个int array A, 里面数是从小到大排好的, 然你把所有的数平方而且再从小到大排好. 
+
+每轮一小时, 所以写完还剩很多时间, 就聊了聊我为什么想来这里之类的, 我们还挺谈的来的. 我确定这轮肯定过了, 就愉快的和他再见准备开始下一轮了...
+
+第二轮, ABC大哥,可能快三十吧, 他有个个人网页, 上面有一张他吊吊的照片, 一看就不是好说话的. 果然他态度不冷不热, 他是做网页设计和软件的, 很轻蔑地说我没有这方面经验还想来这工作, 还在我做题时把他的话筒静音了.
+题: 给你一句英文string, 词之间空格分开的. 要你写个function把每个词中间的字母随机打乱, 而且每个打乱的顺序出现的概论是相同的, 比如说对于词apple, 可能得到apple,aplpe,alppe. 写完后加了一问, 要求如果一句话能打乱成不一样的, 则必须打乱成不一样, 比如说"i am sam", 则打乱后只能还是"i am sam", 但是"it is over" 则必须打乱成"it is oevr".
+我写的时候脑子短路漏了一个case, 在他提醒下才发现. 不用说, 觉得这轮完蛋了, 面试官绝对不会给我投pass的...
+
+(字符可以留在原位. 只是Follow-up要求打乱后的整个句子和原始的不一样.
+我当时不知道Fisher–Yates shuffle, 刚瞅了眼维基百科, 才发现我想出来的就是这个...
+当时想多了, 为了均匀打乱词的中间, 我最先想到的是permutation group, 先写的是
+for i from 0 to n-1,. 1point 3acres 璁哄潧
+  swap i with random(1,n)
+然后突然意识到这根本不是概率相等的, 解释了一下, 改成了 swap i with random(i,n).
+
+Given a string of words,. Shuffle chars except for the first and last word for each word. 
+E.g. Input is  "I want to buy a cup of water"
+Output is "I wnat to buy a cup of wtear")
+
+第三轮, 慈祥的白人大叔, 他的网总是断, 而且不是他听不见我的声音, 就是我听不见他的. 他就在网上和我打字聊了, 说他在这里工作三个月了, 还夸我的CV非常好...
+题: 把两条linked lists和成一条, 给的input lists的数是从小到大但可能有重复的, 要求return的仍然从小到大但没有重复. 最后他建议reschedule, 我也同意了.
+[一周后的rescheduled轮, 他接着夸我CV好, 我当时都不知道该说什么了. 然后让我写一个function, 打出一个array里最大的和第二大的数(这也能当面试题?!). 如果第二大的数和最大的一样, 就把最大的打出两遍就好了. 我写完了后面试就彻底结束了, 这才过了15分钟啊. 囧. ]
+
+第四轮, 一个三哥, 分公司director, MBA毕业的, 最老的员工之一. 特能说, 让我将我对前几轮面试的看法. 他又吹了吹他那多好后, 让我说怎么设计电梯, 要新颖要具体. 还问如果一个高楼有三个电梯, 应该怎么运作让人平均等的时间最少等. 我平时就脑洞大, 聊天爱跑题, 然后就脑洞大开的给他讲了半个小时, 他仿佛非常满意. 最后问了问我个人经历, 听说我还要挺久才能毕业, 他沉默了下, 说公司发展快, 不知道那时还要不要人...
+
+You are given a binary tree as a sequence of parent-child pairs. For example, the tree represented by the node pairs below:
+(A,B) (A,C) (B,G) (C,H) (E,F) (B,D) (C,E)
+may be illustrated in many ways, with two possible representations below:
+     A   /  \  B    C / \  / \G  D  E   H       \            F        A   /  \  B    C / \  / \D  G H   E        /       F. Waral 鍗氬鏈夋洿澶氭枃绔�,
+Below is the recursive definition for the S-expression of a tree:
+
+S-exp(node) = ( node->val (S-exp(node->first_child))(S-exp(node->second_child))), if node != NULL. 1point 3acres 璁哄潧
+                         = "", node == NULL
+   where, first_child->val < second_child->val (lexicographically smaller)
+
+This tree can be represented in a S-expression in multiple ways. The lexicographically smallest way of expressing this is as follows:
+(A(B(D)(G))(C(E(F))(H)))
+We need to translate the node-pair representation into an S-expression (lexicographically smallest one), and report any errors that do not conform to the definition of a binary tree.
+
+The list of errors with their codes is as follows:
+
+Error Code      Type of error. From 1point 3acres bbs
+E1                 More than 2 children
+E2                 Duplicate Edges
+E3                 Cycle present.鐣欏璁哄潧-涓€浜�-涓夊垎鍦�
+E4                 Multiple roots
+E5                 Any other error   
+
+Input Format:
+Input must be read from standard input
+Input will consist of on line of parent-child pairs. Each pair consists of two node names separated by a single comma and enclosed in parentheses. A single space separates the pairs.
+
+Output:
+The function must write to standard output.
+Output the given tree in the S-expression representation described above.
+There should be no spaces in the output.
+
+Constraints:
+There is no specific sequence in which the input (parent,child) pairs are represented.
+The name space is composed of upper case single letter (A-Z) so the maximum size is 26 nodes.
+Error cases are to be tagged in the order they appear on the list. For example, if one input pair raises both error cases 1 and 2, the output must be E1.
+
+
+Sample Input #00
+(B,D) (D,E) (A,B) (C,F) (E,G) (A,C)
+Sample Output #00
+
+(A(B(D(E(G))))(C(F)))-google 1point3acres
+Sample Input #01
+(A,B) (A,C) (B,D) (D,C)
+Sample Output #01
+E3
+Explanation
+Node D is both a child of B and a parent of C, but C and B are both child nodes of A. Since D tries to attach itself as parent to a node already above it in the tree, this forms a cycle.

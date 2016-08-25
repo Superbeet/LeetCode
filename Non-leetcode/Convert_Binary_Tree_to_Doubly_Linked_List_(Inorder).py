@@ -4,7 +4,7 @@ Given a Binary Tree (Bt), convert it to a Doubly Linked List(DLL). The left and 
                                             10
                                           /    \
                                         6       14
-                                      /  \     /　 \
+                                      /  \     /  \
                                    4     8  12      16
                                    
 This is the recursive approach. Note that, here root will point to some inbetween element of the list formed. So,just traverse from root backwards to get the head.
@@ -39,10 +39,11 @@ def convert_node(node, is_left = None):
     curr = node
     # if the current node is the right child of its parent
     # return the least node 
-    if is_left == True:
+
+    if is_left:
         while curr.right is not None:
             curr = curr.right
-    elif is_left == False:
+    else:
         while curr.left is not None:
             curr = curr.left
     
@@ -60,7 +61,6 @@ def binary_tree_to_list(root):
     convert_node(root)
     while root.left is not None:
         root = root.left
-    
     print_list(root)
 
 # Test
@@ -69,7 +69,7 @@ root.left = TreeNode(6)
 root.left.left = TreeNode(4)
 root.left.right = TreeNode(8)
 root.right = TreeNode(14)
-# root.right.left = TreeNode(12)
+root.right.left = TreeNode(12)
 root.right.right = TreeNode(16)
 
 node = binary_tree_to_list(root)

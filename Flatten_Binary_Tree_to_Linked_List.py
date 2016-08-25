@@ -19,6 +19,8 @@ Divide and Conquer
 
 1 - 2 - 3 - 4 - 5 - 6
 
+Pre-order
+
 """
 class Solution(object):
     def flatten(self, root):
@@ -48,6 +50,46 @@ class Solution(object):
             return node
 
         flattenBT(root)
+
+"""
+Definition of TreeNode:
+class TreeNode:
+    def __init__(self, val):
+        this.val = val
+        this.left, this.right = None, None
+"""
+class Solution:
+    # @param root: a TreeNode, the root of the binary tree
+    # @return: nothing
+    def flatten(self, root):
+        """
+        :type root: TreeNode
+        :rtype: void Do not return anything, modify root in-place instead.
+        """
+        self.flatten_helper(root)
+        
+    def flatten_helper(self, root):
+        if root is None:
+            return None
+        
+        if root.left is None and root.right is None:
+            return root
+        
+        if root.left is None:
+            return self.flatten_helper(root.right)
+        
+        if root.right is None:
+            root.right = root.left
+            root.left = None
+            return self.flatten_helper(root.right)
+        
+        left_tail = self.flatten_helper(root.left)
+        right_tail = self.flatten_helper(root.right)
+        
+        left_tail.right = root.right
+        root.right = root.left
+        root.left = None
+        return right_tail
 
 """
 off-line preorder transformation with extra space
@@ -112,9 +154,10 @@ class Solution(object):
 
         flattenBT(root, [None])
 
+""" 
+root's right subtree's predecessor is the rightmost node of its left child  
+"""
 class Solution:
-    """ root's right subtree's predecessor is the rightmost node of its left child  
-    """
     def flatten(self, root):
         # eliminate each level's root's left child
         while root:
