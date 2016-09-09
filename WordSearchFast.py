@@ -63,9 +63,11 @@ class Solution(object):
         :type words: List[str]
         :rtype: List[str]
         """
+        # Postprocessing
         trie = Trie()
         for word in words:
         	trie.insert(word)
+        # DFS from each position
         self.res = set()
         for i in xrange(len(board)):
         	for j in xrange(len(board[i])):

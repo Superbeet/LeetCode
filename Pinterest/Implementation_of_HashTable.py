@@ -8,6 +8,17 @@ Two arrays:
 Assuming, that hash function distributes hash codes uniformly and table allows dynamic 
 resizing, amortized complexity of insertion, removal and lookup operations is constant. 
 
+HashSet is simpler version of HashMap
+
+Set() - Hash or Linear
+
+time complexity
+- put
+- get
+- remove
+
+Skip duplicate
+
 """
 class LinkedHashEntry():
 	def __init__(self, key = None, value = None):

@@ -24,6 +24,11 @@ class stack(object):
     def __repr__(self):
     	return "%s" %self.stack
 
+"""
+[ ] square brackets 方括号
+<> Angle brackets 尖括号
+{} curly brackets or braces 大括号
+"""
 class Solution(object):
     def isValid(self, s):
         """

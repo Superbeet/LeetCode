@@ -33,9 +33,9 @@ class Solution:
         delete = self.minDistance(word1[:-1], word2) + 1
         insert = self.minDistance(word1, word2[:-1]) + 1
         if word1[-1] == word2[-1]:
-            replace = self.minDistance(word1[:-1], word2:-1) 
+            replace = self.minDistance(word1[:-1], word2[:-1]) 
         else:
-            replace = self.minDistance(word1[:-1], word2:-1) + 1
+            replace = self.minDistance(word1[:-1], word2[:-1]) + 1
 
         return min(delete, insert, replace)
 

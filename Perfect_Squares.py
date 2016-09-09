@@ -58,3 +58,35 @@ import timeit
 sol = Solution2()
 print sol.numSquares(1024)
 # print(timeit.timeit("sol.numSquares(5673)", setup="from __main__ import sol",number=100))
+
+class Solution(object):
+    def numSquares(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        dp = [sys.maxint for i in range(n+1)]
+        
+        dp[0] = 0
+        dp[1] = 1
+        
+        for x in xrange(1, int(math.sqrt(n))+1):
+            dp[x**2] = 1
+        
+        for i in xrange(2, n+1):
+            for j in xrange(1, int(math.sqrt(n))+1):
+                if dp[i] == 1:
+                    break
+                if j**2 > i:
+                    break
+                dp[i] = min(dp[i], dp[i-j**2] + 1)
+        
+        return dp[n]
+            
+            
+            
+            
+            
+            
+            
+            

@@ -13,7 +13,54 @@ return = 'bbaa'
 显然不是，因为B[ P[5]+1 ]<>B[6]。那么，我们要考虑“退一步”了。
 我们考虑P[6]是否有可能由P[5]的情况所包含的子串得到，即是否P[6]=P[ P[5] ]+1。
 这里想不通的话可以仔细看一下：
+
+Boyer-Moore and KMP are two other efficient algorithm
+
 """
+prime = 3
+
+class Solution(object):
+    def strStr(self, haystack, needle):
+        """
+        :type haystack: str
+        :type needle: str
+        :rtype: int
+        """
+        if haystack is None:
+            return -1
+        
+        if haystack == "" and needle == "":
+            return 0
+        
+        n = len(haystack)
+        m = len(needle)
+        
+        if len(haystack) < m:
+            return -1
+        
+        curr_hash = self.create_hash(haystack[:m])
+        target_hash = self.create_hash(needle)
+
+        for i in xrange(0, n - m + 1):
+            if curr_hash == target_hash and haystack[i:i+m] == needle:
+                return i
+            if i < n - m:
+                curr_hash = self.update_hash(curr_hash, haystack[i], haystack[i+m], m)
+        
+        return -1
+    
+    def create_hash(self, string):
+        hash = 0
+        for digit in xrange(len(string)):
+            hash += (prime**digit)*ord(string[digit])
+        return hash
+    
+    def update_hash(self, old_hash, left_str, right_str, msp):
+        new_hash = (old_hash - ord(left_str))/prime
+        new_hash += ord(right_str) * (prime**(msp-1))
+        return new_hash
+        
+
 # 48 ms
 class Solution(object):
     def strStr(self, haystack, needle):
@@ -93,6 +140,7 @@ class Solution(object):
             match[i] = j
 
         return match
+
 import unittest
 
 class WidgetTestCase(unittest.TestCase):
