@@ -7,17 +7,20 @@ class Solution(object):
         :rtype: int
         """
         count = 0
-        num = [False] + [True]*(n-1)
+        is_prime = [True]*n
+        is_prime[0] = False
+        is_prime[1] = False
+
         res = 0
         limit = int(math.sqrt(n))+1
         
         for i in range(2, limit):
-            if num[i-1]:
+            if is_prime[i]:
                 for j in range(i*i, n, i):
-                    num[j-1] = False
+                    is_prime[j] = False
         
         for k in range(0, n-1):
-            if num[k]:
+            if is_prime[k]:
                 res += 1
 		
         return res
