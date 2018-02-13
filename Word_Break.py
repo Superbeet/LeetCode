@@ -40,7 +40,7 @@ class Solution:
         dp = [False for i in range(len(s)+1)]
         dp[0] = True
         
-        for i in xrange(1, len(s)+1):
+        for i in xrange(1, len(s)+1):   # end position
             for j in xrange(max(0, min_len), min(i, max_len) + 1):  # width
             
                 if dp[i - j] and s[i - j:i] in dict:

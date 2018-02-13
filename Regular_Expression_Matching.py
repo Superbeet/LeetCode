@@ -46,6 +46,45 @@ dp[i][j] = dp[i][j - 2];
 dp[i][j] = dp[i -1][j] && (p.charAt(j - 2) == s.charAt(i - 1) || p.charAt(j - 2) == '.'
 
 """
+# 92ms Dynamic Programming
+class Solution(object):
+    def isMatch(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: bool
+        """
+        dp = [[False for j in range(len(p)+1)] for i in range(len(s)+1)]
+        dp[0][0] = True
+
+        #i=0
+        for j in xrange(0, len(p)+1):
+            if j>1 and p[j-1]=='*':
+                dp[0][j] = dp[0][j-1] or dp[0][j-2]
+
+        for i in xrange(1, len(s)+1):
+            for j in xrange(1, len(p)+1):
+
+                if p[j-1]=='.':
+                    dp[i][j] = dp[i-1][j-1]
+
+                elif p[j-1]=='*':
+
+                    if dp[i][j-2]:
+                        dp[i][j] = True
+                    
+                    elif dp[i][j-1]:
+                        dp[i][j] = True
+                    
+                    elif dp[i-1][j] and (p[j-2]==s[i-1] or p[j-2]=='.'):
+                        dp[i][j] = True
+
+                elif dp[i-1][j-1] and p[j-1]==s[i-1]:
+                    dp[i][j] = True
+
+        return dp[len(s)][len(p)]
+
+        
 class Solution1:
     def isEqual(self, s0, p0):
         if s0 == p0 or p0=='.':
@@ -64,9 +103,11 @@ class Solution1:
                 return False
         
         else:
+            # * represent 1 or more former char
             if len(s) and self.isEqual(s[0], p[0]):
                 return self.isMatch(s, p[2:]) or self.isMatch(s[1:],p)
             else:
+                # * represent 0 former char
                 return self.isMatch(s, p[2:])
 
 class Solution2:

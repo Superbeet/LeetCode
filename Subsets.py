@@ -46,7 +46,6 @@ class Solution(object):
 
 		# print "index->", index
 		self.getSubset(nums, index+1, n ,rst, now)
-
 		now.append(nums[index])
 		self.getSubset(nums, index+1, n, rst, now)
 		now.pop(-1)

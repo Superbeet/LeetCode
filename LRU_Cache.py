@@ -65,6 +65,10 @@ class LRUCache(object):
         self.hashtable[key] = new_node
         self.__move_to_tail(new_node)
 
+
+"""
+Basic
+"""
 class Node(object):
     def __init__(self, key, value):
         self.key = key

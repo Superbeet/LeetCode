@@ -1,30 +1,5 @@
-class stack(object):
-    def __init__(self):
-        self.stack = []
-
-    def push(self, val):
-        self.stack.append(val)
-        return True
-
-    def peek(self):
-        return self.stack[-1] 
-
-    def pop(self):
-        return self.stack.pop(-1)
-
-    def size(self):
-        return len(self.stack)
-
-    def isEmpty(self):
-        return len(self.stack)==0
-
-    def __str__(self):
-    	return "%s" %self.stack
-
-    def __repr__(self):
-    	return "%s" %self.stack
-
 """
+( ) parenthesis or round brackets 圆括号
 [ ] square brackets 方括号
 <> Angle brackets 尖括号
 {} curly brackets or braces 大括号
@@ -35,31 +10,66 @@ class Solution(object):
         :type s: str
         :rtype: bool
         """
-        stk = stack()
+        stack = []
 
         for c in s:
             if c == '(' or c == '[' or c=='{':
-                stk.push(c)
+                stack.append(c)
 
             else:
-                if stk.isEmpty():
+                if not stack:
                     return False
 
-                top = stk.pop()
-                print top
-                if c==')':
+                top = stack.pop()
+                
+                if c == ')':
                     if top!='(':
-                    	return False
+                        return False
 
-                if c==']':
+                if c== ']':
                     if top!='[':
-                    	return False
+                        return False
 
-                if c=='}':
+                if c == '}':
                     if top!='{':
-                    	return False
+                        return False
 
-        return stk.isEmpty()
+        return not stack
 
-sol=Solution()
-print sol.isValid("()[]{}")
+class Solution(object):
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        pairs = [('A', 'a'), ('[', ']'), ('(', ')')]
+
+        hashmap = {}
+        for left, right in pairs:
+            hashmap[left] = right
+
+        stack = []
+
+        for c in s:
+            if c in hashmap.keys():
+                stack.append(c)
+
+            else:
+                if not stack:
+                    return False
+
+                top = stack.pop()
+                
+                if c in hashmap.values():
+                    if hashmap[top] != c:
+                        return False
+
+        return not stack
+
+sol = Solution()
+print sol.isValid("")
+print sol.isValid("(")
+print sol.isValid("(A[]a)")
+print sol.isValid("A[(]a)")
+print sol.isValid("A[]a")
+print sol.isValid("aA[]")

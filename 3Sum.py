@@ -41,6 +41,52 @@ class Solution(object):
             else:
                 right -= 1
 
+class Solution:
+    """
+    @param numbersbers : Give an array numbersbers of n integer
+    @return : Find all unique triplets in the array which gives the sum of zero.
+    """
+    def threeSum(self, numbers):
+        # write your code here
+        
+        if len(numbers) < 3:
+            return []
+        
+        nums = sorted(numbers)
+        size = len(numbers)
+
+        result = []
+        
+        for i in xrange(0, size - 2):
+            if i > 0 and nums[i] == nums[i-1]:
+                continue
+            
+            target = -nums[i]
+            left, right = i + 1, size - 1
+            
+            while left < right:
+                
+                cur_sum = nums[left] + nums[right]
+                
+                if cur_sum > target:
+                    right -= 1
+                
+                elif cur_sum < target:
+                    left += 1
+                
+                else:
+                    result.append([nums[i], nums[left], nums[right]])        
+                    left += 1
+                    right -= 1
+                    
+                    while left > 0 and left < size and nums[left] == nums[left-1]:
+                        left += 1
+                    
+                    while right >= 0 and right < size and nums[right] == nums[right+1]:
+                        right -= 1
+                                            
+        return result
+
 sol = Solution()
 # print sol.threeSum([0,0,0])                
 print sol.threeSum([0,1,1])                

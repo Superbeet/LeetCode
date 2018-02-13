@@ -1,7 +1,46 @@
 # -*- coding: utf-8 -*- 
 """
+Memorization
+"""
+class Solution(object):
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: Set[str]
+        :rtype: List[str]
+        """
+        if not s:
+            return []
+        
+        return self.helper(s, wordDict, {})
+    
+    def helper(self, s, word_dict, memo):
+        
+        if s in memo:
+            return memo[s]
+        
+        sol = []
+        
+        if s == "":
+            sol.append("")
+            return sol
+        
+        for i in xrange(1, len(s)+1):
+            if s[:i] in word_dict:
+                segments = self.helper(s[i:], word_dict, memo)
+                for segment in segments:
+                    if segment == "":
+                        sol.append(s[:i])
+                    else:
+                        sol.append(s[:i] + " " + segment)
+        
+        memo[s] = sol
+        return sol
+  
+"""
 # DP: time: O(n^2*k), space: O(nk), 假设k表示平均每个长度对应解的个数
 """
+
 class Solution(object):
     def wordBreak(self, s, wordDict):
         size = len(s)

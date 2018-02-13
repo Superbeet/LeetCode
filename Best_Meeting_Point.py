@@ -58,7 +58,7 @@ class Solution(object):
         :type grid: List[List[int]]
         :rtype: int
         
-        Do BFS from each node, use DP table to recall the sum of distances to all friends' houses
+        Projection
         """
         h = len(grid)
         w = len(grid[0])

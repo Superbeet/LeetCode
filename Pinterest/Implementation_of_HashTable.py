@@ -16,6 +16,7 @@ time complexity
 - put
 - get
 - remove
+- contains
 
 Skip duplicate
 

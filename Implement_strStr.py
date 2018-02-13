@@ -59,8 +59,40 @@ class Solution(object):
         new_hash = (old_hash - ord(left_str))/prime
         new_hash += ord(right_str) * (prime**(msp-1))
         return new_hash
-        
 
+class Solution:
+    def strStr(self, source, target):
+        # write your code here
+        if source is None or target is None:
+            return -1
+        
+        i = 0
+        n = len(target)
+        m = len(source)
+        target_hash = self.create_hash_code(target)
+        source_hash = self.create_hash_code(source[0:n])    
+        
+        for i in xrange(1, m - n + 2):
+            if source_hash == target_hash and source[i - 1: i - 1 + n] == target:
+                return i - 1
+                
+            if i < m - n + 1:
+                source_hash = self.update_hash_code(source_hash, n, source[i - 1], source[i - 1 + n])
+            
+        return -1
+    
+    def create_hash_code(self, string):
+        prime = 3
+        hash_code = 0
+        for i, c in enumerate(string):
+            hash_code += ord(c)*(prime**i)
+        return hash_code
+        
+    def update_hash_code(self, pre_hash_code, target_size, old_char, new_char):
+        prime = 3
+        new_hash_code = (pre_hash_code - ord(old_char))/prime + ord(new_char)*(prime**(target_size - 1))
+        return new_hash_code
+# ----------------------------------------------------------------------------
 # 48 ms
 class Solution(object):
     def strStr(self, haystack, needle):

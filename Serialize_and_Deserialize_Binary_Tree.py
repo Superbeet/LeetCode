@@ -1,3 +1,7 @@
+# Your Codec object will be instantiated and called as such:
+# codec = Codec()
+# codec.deserialize(codec.serialize(root))
+
 # Definition for a binary tree node.
 class TreeNode(object):
     def __init__(self, x):
@@ -15,11 +19,6 @@ class Codec:
         :type root: TreeNode
         :rtype: str
         """
-        serial = []
-
-        if not root:
-            return None
-
         def do_serialize(node):
 
             if node is None:
@@ -29,6 +28,11 @@ class Codec:
             serial.append(str(node.val))
             do_serialize(node.left)
             do_serialize(node.right) 
+            
+        serial = []
+
+        if not root:
+            return None
 
         do_serialize(root)
 
@@ -42,12 +46,6 @@ class Codec:
         :type data: str
         :rtype: TreeNode
         """
-
-        if not data:
-            return None
-
-        index = [0]
-
         def do_deserialize(data, index):
 
             if index[0]>=len(data) or data[index[0]]=='#':
@@ -60,6 +58,11 @@ class Codec:
             node.right = do_deserialize(data, index)
 
             return node
+
+        if not data:
+            return None
+
+        index = [0]
 
         return do_deserialize(data, index)
 
